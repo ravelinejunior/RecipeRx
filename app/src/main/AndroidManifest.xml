@@ -12,12 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecipeRx">
         <activity
+            android:name=".view.activity.NewDishActivity"
+            android:theme="@style/Theme.RecipeRx.Custom_NoActionBar"
+            android:label="Add New Dish"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SplashScreenActivity"
-            android:theme="@style/Theme.RecipeRx.Custom_NoActionBar"
-            android:exported="true">
+            android:name=".view.activity.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.RecipeRx.Custom_NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

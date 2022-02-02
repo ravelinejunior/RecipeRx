@@ -1,4 +1,4 @@
-package br.com.raveline.reciperx.view.fragment
+package br.com.raveline.reciperx.view.fragment.notification
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,25 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.viewmodel.NotificationViewModel
 
-class HomeFragment : Fragment() {
+class NotificationFragment : Fragment() {
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = NotificationFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: NotificationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.notification_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

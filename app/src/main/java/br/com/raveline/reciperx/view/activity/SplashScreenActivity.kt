@@ -1,12 +1,10 @@
-package br.com.raveline.reciperx.view
+package br.com.raveline.reciperx.view.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
@@ -16,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.ActivitySplashScreenBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
