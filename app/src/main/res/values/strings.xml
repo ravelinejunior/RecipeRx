@@ -5,4 +5,5 @@
     <string name="dashboard">Dashboard</string>
     <string name="food_for_fool">Food For Fool</string>
     <string name="new_dish">New Dish</string>
+    <string name="name">Name</string>
 </resources>

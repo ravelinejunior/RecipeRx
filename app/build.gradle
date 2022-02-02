@@ -47,6 +47,9 @@ android {
 
 dependencies {
 
+    // Sdp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
     //Preferences
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
