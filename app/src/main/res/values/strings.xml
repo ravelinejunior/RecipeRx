@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RecipeRx</string>
+    <string name="home">Home</string>
+    <string name="notification">Notification</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="food_for_fool">Food For Fool</string>
+</resources>

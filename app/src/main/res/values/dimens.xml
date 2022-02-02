@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MARGIN -->
+    <dimen name="no_dp">0dp</dimen>
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="half_dp">0.5dp</dimen>
+    <dimen name="margin_xxxsmall">2dp</dimen>
+    <dimen name="margin_xxsmall">4dp</dimen>
+    <dimen name="margin_xsmall">8dp</dimen>
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="margin_normal">24dp</dimen>
+    <dimen name="margin_normal_negative">-24dp</dimen>
+    <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_large">40dp</dimen>
+    <dimen name="margin_xlarge">48dp</dimen>
+    <dimen name="margin_xxlarge">60dp</dimen>
+    <dimen name="margin_xxxlarge">80dp</dimen>
+    <dimen name="margin_frame_layout">88dp</dimen>
+
+    <dimen name="margin_xxbig">108dp</dimen>
+    <dimen name="height_xbig">100dp</dimen>
+    <dimen name="margin_xxxbig">120dp</dimen>
+
+    <dimen name="margin_card_input">12dp</dimen>
+
+    <dimen name="card_label_width">92dp</dimen>
+
+    <!-- PADDING -->
+    <dimen name="padding_xxxsmall">2dp</dimen>
+    <dimen name="padding_xxsmall">4dp</dimen>
+    <dimen name="padding_xsmall">8dp</dimen>
+    <dimen name="padding_small">16dp</dimen>
+    <dimen name="padding_normal">24dp</dimen>
+    <dimen name="padding_medium">32dp</dimen>
+    <dimen name="padding_large">40dp</dimen>
+    <dimen name="padding_xlarge">60dp</dimen>
+
+    <!-- SCREEN -->
+    <dimen name="screen_margin_start">@dimen/margin_normal</dimen>
+    <dimen name="screen_margin_end">@dimen/margin_normal</dimen>
+    <dimen name="screen_margin_top">@dimen/margin_normal</dimen>
+    <dimen name="screen_margin_bottom">@dimen/margin_normal</dimen>
+
+    <!--TEXTS-->
+    <dimen name="title_margin_top">@dimen/margin_medium</dimen>
+    <dimen name="sub_title_margin_top">@dimen/margin_small</dimen>
+    <dimen name="min_text_size_saldo">12sp</dimen>
+    <dimen name="text_size_small">16sp</dimen>
+    <dimen name="text_size_normal">24sp</dimen>
+    <dimen name="max_text_size_saldo">26sp</dimen>
+
+    <!-- HEADERS -->
+    <dimen name="header_dimen_item">@dimen/margin_large</dimen>
+    <dimen name="header_dimen_height">88dp</dimen>
+
+    <!-- LINE -->
+    <dimen name="line_height">@dimen/one_dp</dimen>
+    <dimen name="line_height_xxxsmall">2dp</dimen>
+    <dimen name="line_height_xxsmall">@dimen/margin_xxsmall</dimen>
+
+    <!-- TEXT INPUT -->
+    <dimen name="text_input_height">@dimen/margin_large</dimen>
+
+    <!-- DOTTED LINE -->
+    <dimen name="dotted_line_height">12dp</dimen>
+
+    <!-- BUTTON -->
+    <dimen name="button_margin">12dp</dimen>
+    <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_xlarge">48dp</dimen>
+
+    <dimen name="button_margin_top">@dimen/button_margin</dimen>
+    <dimen name="button_margin_bottom">@dimen/button_margin</dimen>
+    <dimen name="button_margin_start">@dimen/button_margin</dimen>
+    <dimen name="button_margin_end">@dimen/button_margin</dimen>
+    <dimen name="button_icon">@dimen/margin_normal</dimen>
+
+    <!-- CARTAO -->
+    <dimen name="cartao_nome_margin_start">@dimen/margin_xsmall</dimen>
+    <dimen name="cartao_nome_margin_end">@dimen/margin_xxxlarge</dimen>
+    <dimen name="cartao_nome_margin_bottom">@dimen/margin_small</dimen>
+    <dimen name="cartao_mini_width">70dp</dimen>
+    <dimen name="cartao_mini_height">44dp</dimen>
+    <dimen name="cartao_numero_margin_start">@dimen/margin_normal</dimen>
+    <dimen name="cartao_numero_margin_end">@dimen/margin_normal</dimen>
+
+    <!-- CARD -->
+    <dimen name="card_elevation_xxxsmall">@dimen/padding_xxxsmall</dimen>
+    <dimen name="card_elevation_xxsmall">@dimen/padding_xxsmall</dimen>
+    <dimen name="card_elevation_xsmall">@dimen/padding_xsmall</dimen>
+    <dimen name="card_corner_radius_xsmall">@dimen/padding_xsmall</dimen>
+    <dimen name="card_plano_beneficio_min_height">300dp</dimen>
+    <dimen name="width_card_action">116dp</dimen>
+    <dimen name="height_card_action">123dp</dimen>
+    <dimen name="width_big_card_action">156dp</dimen>
+    <dimen name="height_big_card_action">216dp</dimen>
+
+    <!-- SHADOW -->
+    <dimen name="shadow_height">20dp</dimen>
+
+    <!-- CARDVIEW COMPONENTS -->
+    <dimen name="cardview_elevation_small">4dp</dimen>
+    <dimen name="cardview_elevation_medium">8dp</dimen>
+    <dimen name="cardview_elevation_large">10dp</dimen>
+
+    <!-- BADGE -->
+    <dimen name="badge_height">16dp</dimen>
+
+    <!-- MODAL DIMENS-->
+    <dimen name="modal_card_view">400dp</dimen>
+
+    <!-- LINE SPACE -->
+    <dimen name="lineSpacing_one">1sp</dimen>
+    <dimen name="lineSpacing">5sp</dimen>
+    <dimen name="lineSpacing_normal">6sp</dimen>
+    <dimen name="lineSpacing_medium">8sp</dimen>
+    <dimen name="lineSpacing_big">24dp</dimen>
+
+    <!-- SIZES LAYOUTS -->
+    <dimen name="width_xxxxsmall">2dp</dimen>
+    <dimen name="height_xxxxsmall">2dp</dimen>
+    <dimen name="width_xxxsmall">4dp</dimen>
+    <dimen name="height_xxxsmall">4dp</dimen>
+    <dimen name="width_xsmall">12dp</dimen>
+    <dimen name="height_xsmall">12dp</dimen>
+    <dimen name="width_small">16dp</dimen>
+    <dimen name="width_normal">24dp</dimen>
+    <dimen name="width_xnormal">32dp</dimen>
+    <dimen name="height_small">16dp</dimen>
+    <dimen name="width_medium">16dp</dimen>
+    <dimen name="height_medium">16dp</dimen>
+    <dimen name="height_xxxlarge">80dp</dimen>
+    <dimen name="width_xxxlarge">80dp</dimen>
+
+    <!-- FRAME LAYOUT -->
+    <dimen name="margin_top_frame">88dp</dimen>
+    <dimen name="height_frame_default">20dp</dimen>
+    <dimen name="width_large">45dp</dimen>
+    <dimen name="height_normal">16dp</dimen>
+    <dimen name="height_xnormal">32dp</dimen>
+    <dimen name="height_xmedium">35dp</dimen>
+    <dimen name="height_large">45dp</dimen>
+    <dimen name="height_extra_large">120dp</dimen>
+
+    <!-- MODAL DIMENS-->
+    <dimen name="min_height">200dp</dimen>
+    <dimen name="min_height_action_footer_card">57dp</dimen>
+
+    <!-- CARD VIEW -->
+    <dimen name="card_corner_radius">10dp</dimen>
+    <dimen name="card_corner_radius_medium">20dp</dimen>
+
+    <dimen name="drawable_padding">6dp</dimen>
+    <dimen name="drawable_padding_large">10dp</dimen>
+
+    <dimen name="app_bar_elevation">4dp</dimen>
+
+    <dimen name="shadow_view_height">20dp</dimen>
+
+    <dimen name="min_width_progress">250dp</dimen>
+
+    <!-- DUDA BUTTOM -->
+    <dimen name="duda_buttons">40dp</dimen>
+    <dimen name="duda_quick_reply_height">60dp</dimen>
+
+    <dimen name="extract_filter_width">90dp</dimen>
+
+    <!-- PROGRESS SIZE -->
+    <dimen name="progress_large">48dp</dimen>
+
+    <dimen name="header_height">96dp</dimen>
+
+    <!--WIDGETS DA DUDA-->
+    <dimen name="duda_height_progress">20dp</dimen>
+
+    <dimen name="retangulo_poupa_cdb">130dp</dimen>
+    <dimen name="retangulo_poupa_poupanca">70dp</dimen>
+
+    <dimen name="imagem_gnv">140dp</dimen>
+
+    <!-- REINICIAR CADASTRO -->
+    <dimen name="icone_check_dados_cadastro_excluidos">128dp</dimen>
+
+    <dimen name="image_view_walk_through_max_height">128dp</dimen>
+
+    <!-- TEXT SIZE -->
+    <dimen name="txt_xxxsmall">2sp</dimen>
+    <dimen name="txt_xxsmall">4sp</dimen>
+    <dimen name="txt_xsmall">8sp</dimen>
+    <dimen name="txt_smallx">14sp</dimen>
+    <dimen name="txt_small">16sp</dimen>
+    <dimen name="txt_normalx">20sp</dimen>
+    <dimen name="txt_normal">24sp</dimen>
+    <dimen name="txt_medium">32sp</dimen>
+    <dimen name="txt_large">40sp</dimen>
+    <dimen name="txt_xlarge">60sp</dimen>
+
+    <!-- PIX -->
+    <dimen name="width_imagem_contato_pix_inserir_numero">30dp</dimen>
+    <dimen name="height_imagem_contato_pix_inserir_numero">48dp</dimen>
+
+    <!-- VIEW LINE -->
+    <dimen name="view_line_height_xxsmall">4dp</dimen>
+    <dimen name="view_line_width_medium">32dp</dimen>
+
+    <!-- INVESTIMENTOS -->
+    <dimen name="indexers_height">60dp</dimen>
+    <dimen name="shopping_cartoes_vertical_image_card_width">106dp</dimen>
+    <dimen name="shopping_cartoes_vertical_image_card_height">157dp</dimen>
+    <dimen name="plan_logo_width">150dp</dimen>
+    <dimen name="plan_logo_height">90dp</dimen>
+    <dimen name="fiel_torcedor_logo_width">300dp</dimen>
+    <dimen name="fiel_torcedor_logo_height">200dp</dimen>
+
+    <dimen name="thumbnail_default_size">56dp</dimen>
+
+</resources>
