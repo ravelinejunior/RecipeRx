@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.165" />
         <entry key="app/src/main/res/drawable/ic_main_launcher_background.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
-        <entry key="app/src/main/res/layout/activity_new_dish.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_new_dish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/menu_nav_bottom.xml" value="0.19375" />

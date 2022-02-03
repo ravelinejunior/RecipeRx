@@ -6,4 +6,10 @@
     <string name="food_for_fool">Food For Fool</string>
     <string name="new_dish">New Dish</string>
     <string name="name">Name</string>
+    <string name="dish_type">Dish Type</string>
+    <string name="category_dish">Category</string>
+    <string name="ingredients_dish">Ingredients</string>
+    <string name="cooking_time_minutes_dish">Cooking Time in Minutes</string>
+    <string name="direction_to_cook_dish">Direction to Cook</string>
+    <string name="add_new_dish">Add New Dish</string>
 </resources>
