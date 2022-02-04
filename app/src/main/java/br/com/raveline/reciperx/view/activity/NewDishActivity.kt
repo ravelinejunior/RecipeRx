@@ -53,12 +53,12 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
 
             //Gallery
             textViewCustomDialogImageGalleryId.setOnClickListener {
-                Toast.makeText(this@NewDishActivity, "Gallery Text", Toast.LENGTH_SHORT).show()
+                getGalleryPermissions()
                 dialog.dismiss()
             }
 
             imageViewCustomDialogImageGalleryId.setOnClickListener {
-                Toast.makeText(this@NewDishActivity, "Gallery Image", Toast.LENGTH_SHORT).show()
+                getGalleryPermissions()
                 dialog.dismiss()
             }
 
