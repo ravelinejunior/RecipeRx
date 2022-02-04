@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="br.com.raveline.reciperx.view.fragment.home.HomeFragment"
-        android:label="home_fragment"
+        android:label="Home"
         tools:layout="@layout/home_fragment" >
         <action
             android:id="@+id/action_homeFragment_to_dashboardFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="br.com.raveline.reciperx.view.fragment.dashboard.DashboardFragment"
-        android:label="dashboard_fragment"
+        android:label="Dashboard"
         tools:layout="@layout/dashboard_fragment" >
         <action
             android:id="@+id/action_dashboardFragment_to_homeFragment"
@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="br.com.raveline.reciperx.view.fragment.notification.NotificationFragment"
-        android:label="notification_fragment"
+        android:label="Notification"
         tools:layout="@layout/notification_fragment" >
         <action
             android:id="@+id/action_notificationFragment_to_dashboardFragment"

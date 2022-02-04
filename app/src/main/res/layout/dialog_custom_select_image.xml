@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_8sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardPreventCornerOverlap="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp"
+            app:chainUseRtl="true">
+
+
+            <TextView
+                android:id="@+id/textViewCustomDialogImageTitleId"
+                style="@style/Theme.Custom_Title_Font"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/select_action_image"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/abbey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCustomDialogImageTitleId" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewCustomDialogImageCameraId"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/leaf_camera"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCustomDialogImageTitleId" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewCustomDialogImageGalleryId"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/leaf_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCustomDialogImageTitleId" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/textViewCustomDialogImageCameraId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/camera"
+                android:textColor="@color/primary_color"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCustomDialogImageCameraId" />
+
+            <TextView
+                android:id="@+id/textViewCustomDialogImageGalleryId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/gallery"
+                android:textColor="#036160"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCustomDialogImageGalleryId" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

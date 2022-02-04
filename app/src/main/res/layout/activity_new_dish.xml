@@ -10,7 +10,6 @@
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:context=".view.activity.NewDishActivity">
 
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarNewDishId"
             android:layout_width="match_parent"
@@ -30,36 +29,29 @@
             android:id="@+id/frameLayoutNewDishId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_dark_color"
+            android:background="@color/primary_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarNewDishId">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardPreventCornerOverlap="true">
-
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewNewDishNoImageId"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_240sdp"
-                    android:alpha="0.7"
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:contentDescription="@string/androidx_startup"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/food_image" />
+                    android:src="@drawable/food_image" />
 
                 <ImageView
                     android:id="@+id/imageViewNewDishAddNewImageId"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_gravity="center"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_baseline_camera_enhance_24" />
-            </com.google.android.material.card.MaterialCardView>
+                    app:srcCompat="@drawable/ic_add_camera_white" />
 
 
         </FrameLayout>
