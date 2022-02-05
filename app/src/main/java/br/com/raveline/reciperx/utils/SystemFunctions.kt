@@ -2,6 +2,9 @@ package br.com.raveline.reciperx.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -10,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.io.ByteArrayOutputStream
+
 
 object SystemFunctions {
     fun Fragment.hideKeyboard() {
@@ -47,6 +52,14 @@ object SystemFunctions {
     @BindingAdapter("android:imageUrl")
     fun loadImage(view: ImageView, url: String?) {
         view.loadImage(url, getProgressDrawable(view.context))
+    }
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Image", null)
+        return Uri.parse(path)
     }
 
 }

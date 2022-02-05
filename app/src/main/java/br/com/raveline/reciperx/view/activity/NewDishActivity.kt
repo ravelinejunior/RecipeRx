@@ -1,19 +1,27 @@
 package br.com.raveline.reciperx.view.activity
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.ActivityNewDishBinding
 import br.com.raveline.reciperx.databinding.DialogCustomSelectImageBinding
+import br.com.raveline.reciperx.utils.Constants
+import br.com.raveline.reciperx.utils.Constants.cameraIdKey
+import br.com.raveline.reciperx.utils.SystemFunctions.getImageUri
+import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -65,20 +73,43 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == cameraIdKey) {
+                data?.extras?.let {
+                    val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
+                    newDishBinding.apply {
+                        imageViewNewDishNoImageId.setImageBitmap(thumbnail)
+                        imageViewNewDishAddNewImageId.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                this@NewDishActivity,
+                                R.drawable.ic_edit_white
+                            )
+                        )
+                    }
+
+                }
+            }
+        }
+    }
+
     private fun getGalleryPermissions() {
         Dexter.withContext(this@NewDishActivity).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                if (report?.areAllPermissionsGranted() == true) {
-                    Toast.makeText(
-                        this@NewDishActivity,
-                        "Gallery permission granted!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    showRationalDialogForPermissions()
+                report?.let {
+                    if (report.areAllPermissionsGranted()) {
+                        Toast.makeText(
+                            this@NewDishActivity,
+                            "Gallery permission granted!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        showRationalDialogForPermissions()
+                    }
                 }
             }
 
@@ -98,14 +129,13 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
             Manifest.permission.CAMERA
         ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                if (report?.areAllPermissionsGranted() == true) {
-                    Toast.makeText(
-                        this@NewDishActivity,
-                        "Camera permission granted!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    showRationalDialogForPermissions()
+                report?.let {
+                    if (report.areAllPermissionsGranted()) {
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(intent, cameraIdKey)
+                    } else {
+                        showRationalDialogForPermissions()
+                    }
                 }
             }
 
