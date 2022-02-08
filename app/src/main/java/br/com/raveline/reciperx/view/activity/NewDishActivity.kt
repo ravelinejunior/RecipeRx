@@ -20,6 +20,7 @@ import br.com.raveline.reciperx.databinding.DialogCustomSelectImageBinding
 import br.com.raveline.reciperx.utils.Constants.cameraIdKey
 import br.com.raveline.reciperx.utils.Constants.galleryIdKey
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -89,6 +90,8 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                                 R.drawable.ic_edit_white
                             )
                         )
+                        frameLayoutNewDishId.setBackgroundColor(resources.getColor(R.color.white))
+
                     }
                 }
             } else if (requestCode == galleryIdKey) {
@@ -106,12 +109,17 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                             applicationContext,
                             R.drawable.ic_edit_white
                         )
-                    ).placeholder(
-                        ContextCompat.getDrawable(
-                            applicationContext,
-                            R.drawable.giphy
-                        )
-                    ).into(newDishBinding.imageViewNewDishAddNewImageId)
+                    )
+                        .circleCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(
+                            ContextCompat.getDrawable(
+                                applicationContext,
+                                R.drawable.giphy
+                            )
+                        ).into(newDishBinding.imageViewNewDishAddNewImageId)
+
+                    newDishBinding.frameLayoutNewDishId.setBackgroundColor(resources.getColor(R.color.white))
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Snackbar.make(newDishBinding.root.rootView, "Cancelled", Snackbar.LENGTH_SHORT)
