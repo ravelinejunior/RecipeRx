@@ -37,7 +37,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewNewDishNoImageId"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_height="@dimen/_180sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:contentDescription="@string/androidx_startup"
@@ -46,11 +46,11 @@
 
                 <ImageView
                     android:id="@+id/imageViewNewDishAddNewImageId"
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/ic_add_camera_white" />
 
 

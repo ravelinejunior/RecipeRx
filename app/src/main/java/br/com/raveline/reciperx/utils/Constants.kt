@@ -14,5 +14,6 @@ object Constants {
     // CAMERA
     const val cameraIdKey = 2151
     const val galleryIdKey = 222
+    const val cameraNameKey = "RecipeRx_Images"
 
 }
