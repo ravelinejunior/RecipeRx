@@ -8,25 +8,27 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.ActivityNewDishBinding
 import br.com.raveline.reciperx.databinding.DialogCustomSelectImageBinding
-import br.com.raveline.reciperx.utils.Constants
 import br.com.raveline.reciperx.utils.Constants.cameraIdKey
-import br.com.raveline.reciperx.utils.SystemFunctions.getImageUri
+import br.com.raveline.reciperx.utils.Constants.galleryIdKey
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 
 class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var newDishBinding: ActivityNewDishBinding
@@ -88,44 +90,70 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                             )
                         )
                     }
-
                 }
+            } else if (requestCode == galleryIdKey) {
+                data?.extras?.let {
+                    val selectedPhotoUri = data.data
+                    Glide.with(applicationContext).load(selectedPhotoUri).placeholder(
+                        ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.giphy
+                        )
+                    ).into(newDishBinding.imageViewNewDishNoImageId)
+
+                    Glide.with(applicationContext).load(
+                        ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.ic_edit_white
+                        )
+                    ).placeholder(
+                        ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.giphy
+                        )
+                    ).into(newDishBinding.imageViewNewDishAddNewImageId)
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Snackbar.make(newDishBinding.root.rootView, "Cancelled", Snackbar.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
     private fun getGalleryPermissions() {
-        Dexter.withContext(this@NewDishActivity).withPermissions(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ).withListener(object : MultiplePermissionsListener {
-            override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                report?.let {
-                    if (report.areAllPermissionsGranted()) {
-                        Toast.makeText(
-                            this@NewDishActivity,
-                            "Gallery permission granted!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        showRationalDialogForPermissions()
-                    }
-                }
+        Dexter.withContext(applicationContext).withPermission(
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ).withListener(object : PermissionListener {
+            override fun onPermissionGranted(permission: PermissionGrantedResponse?) {
+                val galleryIntent = Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                )
+                startActivityForResult(galleryIntent, galleryIdKey)
+            }
+
+            override fun onPermissionDenied(pDenied: PermissionDeniedResponse?) {
+                Snackbar.make(
+                    newDishBinding.root.rootView,
+                    "Permissions Denied!",
+                    Snackbar.LENGTH_SHORT
+                )
+                    .show()
             }
 
             override fun onPermissionRationaleShouldBeShown(
-                requests: MutableList<PermissionRequest>?,
-                token: PermissionToken?
+                pRequest: PermissionRequest?,
+                pToken: PermissionToken?
             ) {
                 showRationalDialogForPermissions()
             }
+
         }).onSameThread().check()
     }
 
     private fun getCameraPermissions() {
-        Dexter.withContext(this@NewDishActivity).withPermissions(
+        Dexter.withContext(applicationContext).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
         ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
