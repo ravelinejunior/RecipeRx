@@ -47,6 +47,10 @@ android {
 
 dependencies {
 
+    // LottieFiles
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
     // Dexter Permission
     implementation 'com.karumi:dexter:6.2.3'
 
