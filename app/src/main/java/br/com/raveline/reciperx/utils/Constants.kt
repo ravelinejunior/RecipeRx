@@ -24,14 +24,14 @@ object Constants {
     fun dishTypes():ArrayList<String>{
 
         val list = arrayListOf<String>()
-        list.add("breakfast")
-        list.add("lunch")
-        list.add("snacks")
-        list.add("dinner")
-        list.add("salad")
-        list.add("side dish")
-        list.add("dessert")
-        list.add("others")
+        list.add("Breakfast")
+        list.add("Lunch")
+        list.add("Snacks")
+        list.add("Dinner")
+        list.add("Salad")
+        list.add("Side Dish")
+        list.add("Dessert")
+        list.add("Others")
 
         return list
     }

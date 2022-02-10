@@ -15,8 +15,9 @@
         <entry key="app/src/main/res/layout/activity_new_dish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/dialog_custom_select_image.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/dialog_custom_spinner_data.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/dialog_custom_spinner_data.xml" value="0.22" />
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/item_adapter_custom_spinner_data.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_custom_spinner_data.xml" value="0.2210144927536232" />
         <entry key="app/src/main/res/menu/menu_nav_bottom.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/menu_new_dishe.xml" value="0.19375" />

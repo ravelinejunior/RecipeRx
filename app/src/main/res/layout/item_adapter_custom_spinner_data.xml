@@ -4,8 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutAdapterCustomSpinnerId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/textViewAdapterCustomSpinnerId"
@@ -13,9 +15,18 @@
             android:layout_height="wrap_content"
             tools:text="TextView"
             style="@style/Theme.Custom_Font"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/gray_chateau"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAdapterCustomSpinnerId" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -15,4 +15,12 @@
     <string name="camera">Câmera</string>
     <string name="gallery">Gallery</string>
     <string name="select_action_image">Select Action Image</string>
+    <string name="error_image_selected">You must select a message to continue</string>
+    <string name="error_title_selected">Title must not be empty</string>
+    <string name="error_type_selected">Type must not be empty</string>
+    <string name="error_category_selected">Category must not be empty</string>
+    <string name="error_ingredients_selected">Ingredients must not be empty</string>
+    <string name="error_cooking_time_selected">You must select the time to cook this recipe</string>
+    <string name="success_message">Success</string>
+    <string name="error_cooking_direction_selected">Please set the cooking directions to this recipe</string>
 </resources>

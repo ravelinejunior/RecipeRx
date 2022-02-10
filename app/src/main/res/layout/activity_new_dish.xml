@@ -175,8 +175,8 @@
                         style="@style/Theme.Custom_Font"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:singleLine="true"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -197,8 +197,8 @@
                         style="@style/Theme.Custom_Font"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false" />
+                        android:singleLine="true"
+                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
