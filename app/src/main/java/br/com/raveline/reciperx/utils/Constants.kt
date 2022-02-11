@@ -24,6 +24,8 @@ object Constants {
     const val DISH_TYPE = "DishType"
     const val DISH_CATEGORY = "DishCategory"
     const val DISH_COOKING_TYPE = "DishCookingType"
+    const val DISH_IMAGE_SOURCE_LOCAL = "Local_Source"
+    const val DISH_IMAGE_SOURCE_REMOTE = "Remote_Source"
 
     fun dishTypes(): ArrayList<String> {
 

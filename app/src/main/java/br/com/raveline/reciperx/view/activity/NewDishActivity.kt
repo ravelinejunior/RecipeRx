@@ -17,15 +17,19 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.ActivityNewDishBinding
 import br.com.raveline.reciperx.databinding.DialogCustomSelectImageBinding
 import br.com.raveline.reciperx.databinding.DialogCustomSpinnerDataBinding
 import br.com.raveline.reciperx.utils.Constants.DISH_CATEGORY
 import br.com.raveline.reciperx.utils.Constants.DISH_COOKING_TYPE
+import br.com.raveline.reciperx.utils.Constants.DISH_IMAGE_SOURCE_LOCAL
 import br.com.raveline.reciperx.utils.Constants.DISH_TYPE
 import br.com.raveline.reciperx.utils.Constants.cameraIdKey
 import br.com.raveline.reciperx.utils.Constants.cameraNameKey
@@ -34,6 +38,8 @@ import br.com.raveline.reciperx.utils.Constants.dishCookingTime
 import br.com.raveline.reciperx.utils.Constants.dishTypes
 import br.com.raveline.reciperx.utils.Constants.galleryIdKey
 import br.com.raveline.reciperx.view.adapter.CustomSpinnerAdapter
+import br.com.raveline.reciperx.viewmodel.FavDishViewModel
+import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -59,6 +65,11 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var customDialog: Dialog
     private lateinit var newDishBinding: ActivityNewDishBinding
     private var mImagePath = ""
+
+    private val favDishViewModel: FavDishViewModel by viewModels {
+        FavDishViewModelFactory((application as DishApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         newDishBinding = ActivityNewDishBinding.inflate(layoutInflater)
@@ -152,11 +163,18 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
                 requestCode == galleryIdKey -> {
-                    data?.extras?.let {
+                    if (data != null && data.data != null) {
                         val selectedPhotoUri = data.data
                         displayImageFromGallery(selectedPhotoUri)
-
+                    } else {
+                        Snackbar.make(
+                            newDishBinding.root.rootView,
+                            resources.getString(androidx.compose.ui.R.string.default_error_message),
+                            Snackbar.LENGTH_SHORT
+                        )
+                            .show()
                     }
+
                 }
                 resultCode == Activity.RESULT_CANCELED -> {
                     Snackbar.make(newDishBinding.root.rootView, "Cancelled", Snackbar.LENGTH_SHORT)
@@ -502,12 +520,37 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                             .show()
                     }
                     else -> {
+                        val dish = DishModel(
+                            title = title,
+                            category = category,
+                            type = type,
+                            cookingTime = cookingTime,
+                            directionsToCook = cookingDirection,
+                            ingredients = ingredients,
+                            image = mImagePath,
+                            imageSource = DISH_IMAGE_SOURCE_LOCAL
+                        )
+
+                        favDishViewModel.insert(dish)
                         Snackbar.make(
                             newDishBinding.root.rootView,
-                            resources.getString(R.string.success_message),
+                            resources.getString(R.string.error_ingredients_selected),
                             Snackbar.LENGTH_SHORT
                         )
+                            .setActionTextColor(
+                                ContextCompat.getColor(
+                                    applicationContext,
+                                    R.color.teal_700
+                                )
+                            ).setBackgroundTint(
+                                ContextCompat.getColor(
+                                    applicationContext,
+                                    R.color.white
+                                )
+                            )
                             .show()
+
+                        finish()
                     }
 
                 }
