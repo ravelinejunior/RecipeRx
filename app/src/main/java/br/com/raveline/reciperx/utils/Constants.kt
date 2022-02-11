@@ -16,12 +16,16 @@ object Constants {
     const val galleryIdKey = 222
     const val cameraNameKey = "RecipeRx_Images"
 
+    // DATABASE
+    const val DISH_TABLE_NAME = "DISH_TABLE"
+    const val DISH_DATABASE_NAME = "DISH_DATABASE"
+
     // DISHES CONSTANTS
     const val DISH_TYPE = "DishType"
     const val DISH_CATEGORY = "DishCategory"
     const val DISH_COOKING_TYPE = "DishCookingType"
 
-    fun dishTypes():ArrayList<String>{
+    fun dishTypes(): ArrayList<String> {
 
         val list = arrayListOf<String>()
         list.add("Breakfast")
@@ -36,7 +40,7 @@ object Constants {
         return list
     }
 
-    fun dishCategories():ArrayList<String>{
+    fun dishCategories(): ArrayList<String> {
         val list = arrayListOf<String>()
 
         list.add("Pizza")
@@ -57,7 +61,7 @@ object Constants {
         return list
     }
 
-    fun dishCookingTime():ArrayList<String>{
+    fun dishCookingTime(): ArrayList<String> {
         val list = arrayListOf<String>()
 
         list.add("5")
@@ -75,9 +79,6 @@ object Constants {
 
         return list
     }
-
-
-
 
 
 }

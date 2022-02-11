@@ -16,12 +16,10 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.ActivityNewDishBinding
 import br.com.raveline.reciperx.databinding.DialogCustomSelectImageBinding
@@ -146,20 +144,24 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == cameraIdKey) {
-                data?.extras?.let {
-                    val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
-                    displayImageFromCamera(thumbnail)
+            when {
+                requestCode == cameraIdKey -> {
+                    data?.extras?.let {
+                        val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
+                        displayImageFromCamera(thumbnail)
+                    }
                 }
-            } else if (requestCode == galleryIdKey) {
-                data?.extras?.let {
-                    val selectedPhotoUri = data.data
-                    displayImageFromGallery(selectedPhotoUri)
+                requestCode == galleryIdKey -> {
+                    data?.extras?.let {
+                        val selectedPhotoUri = data.data
+                        displayImageFromGallery(selectedPhotoUri)
 
+                    }
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Snackbar.make(newDishBinding.root.rootView, "Cancelled", Snackbar.LENGTH_SHORT)
-                    .show()
+                resultCode == Activity.RESULT_CANCELED -> {
+                    Snackbar.make(newDishBinding.root.rootView, "Cancelled", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }
