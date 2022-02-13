@@ -22,5 +22,7 @@
     <string name="error_ingredients_selected">Ingredients must not be empty</string>
     <string name="error_cooking_time_selected">You must select the time to cook this recipe</string>
     <string name="success_message">Success</string>
+    <string name="default_dish_error_message">Something went wrong</string>
     <string name="error_cooking_direction_selected">Please set the cooking directions to this recipe</string>
+    <string name="title">Title</string>
 </resources>

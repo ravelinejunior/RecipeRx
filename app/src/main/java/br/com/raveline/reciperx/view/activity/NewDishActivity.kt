@@ -169,7 +169,7 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         Snackbar.make(
                             newDishBinding.root.rootView,
-                            resources.getString(androidx.compose.ui.R.string.default_error_message),
+                            resources.getString(R.string.default_dish_error_message),
                             Snackbar.LENGTH_SHORT
                         )
                             .show()
@@ -218,7 +218,6 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     private fun getCameraPermissions() {
         Dexter.withContext(applicationContext).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
         ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
@@ -292,7 +291,6 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
             Glide.with(applicationContext).load(
                 bitmap
             )
-                .circleCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(
                     ContextCompat.getDrawable(
@@ -325,7 +323,6 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun displayImageFromGallery(selectedPhotoUri: Uri?) {
         Glide.with(applicationContext).load(selectedPhotoUri)
-            .circleCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(
                 ContextCompat.getDrawable(

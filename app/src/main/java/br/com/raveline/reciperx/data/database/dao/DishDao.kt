@@ -2,12 +2,13 @@ package br.com.raveline.reciperx.data.database.dao
 
 import androidx.room.*
 import br.com.raveline.reciperx.data.model.DishModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 sealed interface DishDao {
 
     @Query("SELECT * FROM DISH_TABLE ORDER BY ID")
-    suspend fun selectAllDishes(): List<DishModel>
+    fun selectAllDishes(): Flow<List<DishModel>>
 
     @Update
     suspend fun updateDish(dishModel: DishModel)

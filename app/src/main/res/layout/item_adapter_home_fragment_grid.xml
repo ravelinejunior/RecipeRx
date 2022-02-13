@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_8sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardElevation="@dimen/_8sdp"
+        >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewHomeAdapterId"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/food_image"
+            />
+        <TextView
+            android:id="@+id/textViewHomeAdapterTitleId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Theme.Custom_Font"
+            android:text="@string/title"
+            android:textAlignment="center"
+            android:paddingVertical="@dimen/_4sdp"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
