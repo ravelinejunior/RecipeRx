@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.DishDetailFragmentBinding
 import br.com.raveline.reciperx.viewmodel.DishDetailViewModel
@@ -30,8 +31,8 @@ class DishDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenStarted {
-            args.let {
-                Toast.makeText(context, it.dish.title, Toast.LENGTH_SHORT).show()
+            if(activity is MainActivity){
+                (activity as MainActivity).hideBottomNavigationView()
             }
         }
     }

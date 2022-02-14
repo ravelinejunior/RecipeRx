@@ -36,6 +36,20 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
+    fun hideBottomNavigationView(){
+        mainBinding.apply {
+            bnvMainId.clearAnimation()
+            bnvMainId.animate().translationY(bnvMainId.height.toFloat()).duration = 600
+        }
+    }
+
+    fun showBottomNavigationView(){
+        mainBinding.apply {
+            bnvMainId.clearAnimation()
+            bnvMainId.animate().translationY(0f).duration = 600
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }

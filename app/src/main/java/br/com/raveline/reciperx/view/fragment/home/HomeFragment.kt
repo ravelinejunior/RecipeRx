@@ -7,10 +7,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.raveline.reciperx.DishApplication
+import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
-import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.HomeFragmentBinding
 import br.com.raveline.reciperx.view.activity.NewDishActivity
 import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
@@ -45,6 +46,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launchWhenResumed {
+            if (activity is MainActivity) {
+                (activity as MainActivity).showBottomNavigationView()
+            }
+        }
 
         favDishViewModel.allDish.observe(viewLifecycleOwner) { dishes ->
             dishes.let {

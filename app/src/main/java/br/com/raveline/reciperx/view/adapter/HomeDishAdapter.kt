@@ -11,11 +11,10 @@ import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.ItemAdapterHomeFragmentGridBinding
 import br.com.raveline.reciperx.utils.ListDiffUtil
-import br.com.raveline.reciperx.view.fragment.dashboard.FavoriteFragment
-import br.com.raveline.reciperx.view.fragment.detail.DishDetailFragmentDirections
+import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragment
 import br.com.raveline.reciperx.view.fragment.home.HomeFragment
 import br.com.raveline.reciperx.view.fragment.home.HomeFragmentDirections
-import br.com.raveline.reciperx.view.fragment.notification.RandomFragment
+import br.com.raveline.reciperx.view.fragment.random.RandomFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
