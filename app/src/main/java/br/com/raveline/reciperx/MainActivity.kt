@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         mainBinding.bnvMainId.setupWithNavController(navController)
+        mainBinding.bnvMainId.itemIconTintList = null
         setupActionBarWithNavController(navController, appBarConfig)
     }
 

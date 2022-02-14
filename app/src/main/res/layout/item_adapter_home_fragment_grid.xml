@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewHomeAdapterId"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_180sdp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/food_image"
             />

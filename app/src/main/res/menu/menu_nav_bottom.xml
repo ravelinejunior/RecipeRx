@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home_white"
+        android:icon="@drawable/ic_homefood"
         android:title="@string/home" />
     <item
         android:id="@+id/dashboardFragment"
-        android:icon="@drawable/ic_dashboard_white"
-        android:title="@string/dashboard" />
+        android:icon="@drawable/ic_healthyfood"
+        android:title="@string/favorites" />
     <item
         android:id="@+id/notificationFragment"
-        android:icon="@drawable/ic_notification_white"
-        android:title="@string/notification" />
+        android:icon="@drawable/ic_randomfood"
+        android:title="@string/random_dish" />
 </menu>

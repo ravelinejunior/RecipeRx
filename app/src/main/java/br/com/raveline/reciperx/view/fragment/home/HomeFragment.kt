@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeFragmentBinding: HomeFragmentBinding
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val homeDishAdapter = HomeDishAdapter()
+    private val homeDishAdapter = HomeDishAdapter(this)
 
     private val favDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as DishApplication).repository)

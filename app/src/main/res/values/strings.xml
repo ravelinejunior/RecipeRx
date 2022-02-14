@@ -25,4 +25,6 @@
     <string name="default_dish_error_message">Something went wrong</string>
     <string name="error_cooking_direction_selected">Please set the cooking directions to this recipe</string>
     <string name="title">Title</string>
+    <string name="random_dish">Random Dish</string>
+    <string name="favorites">Favorites</string>
 </resources>

@@ -3,10 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/drawable/ic_healthyfood.xml" value="0.1595" />
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/drawable/ic_homefood.xml" value="0.1595" />
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/activity_new_dish.xml" value="0.18" />
         <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/dish_detail_fragment.xml" value="0.14166666666666666" />
         <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/home_fragment.xml" value="0.19375" />
         <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/item_adapter_home_fragment_grid.xml" value="0.19375" />
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/layout/random_fragment.xml" value="0.14166666666666666" />
+        <entry key="..\:/Users/Raveline/StudioProjects/RecipeRx/app/src/main/res/menu/menu_nav_bottom.xml" value="0.19375" />
         <entry key="app/src/main/res/drawable/ic_add_camera_white.xml" value="0.165" />
         <entry key="app/src/main/res/drawable/ic_baseline_camera_enhance_24.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.165" />

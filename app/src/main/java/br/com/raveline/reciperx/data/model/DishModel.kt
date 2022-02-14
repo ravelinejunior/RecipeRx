@@ -1,9 +1,12 @@
 package br.com.raveline.reciperx.data.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import br.com.raveline.reciperx.utils.Constants.DISH_TABLE_NAME
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = DISH_TABLE_NAME)
 data class DishModel(
     @PrimaryKey(autoGenerate = true)
@@ -17,4 +20,4 @@ data class DishModel(
     val cookingTime: String,
     val directionsToCook: String,
     var favoriteDish: Boolean = false
-)
+) : Parcelable

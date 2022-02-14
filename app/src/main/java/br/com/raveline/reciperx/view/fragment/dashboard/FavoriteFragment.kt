@@ -1,4 +1,4 @@
-package br.com.raveline.reciperx.view.fragment.notification
+package br.com.raveline.reciperx.view.fragment.dashboard
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,26 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.raveline.reciperx.R
-import br.com.raveline.reciperx.viewmodel.NotificationViewModel
+import br.com.raveline.reciperx.viewmodel.DashboardViewModel
 
-class NotificationFragment : Fragment() {
+class FavoriteFragment : Fragment() {
 
     companion object {
-        fun newInstance() = NotificationFragment()
+        fun newInstance() = FavoriteFragment()
     }
 
-    private lateinit var viewModel: NotificationViewModel
+    private lateinit var viewModel: DashboardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.notification_fragment, container, false)
+        return inflater.inflate(R.layout.favorite_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

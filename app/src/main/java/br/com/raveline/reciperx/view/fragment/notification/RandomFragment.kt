@@ -1,4 +1,4 @@
-package br.com.raveline.reciperx.view.fragment.dashboard
+package br.com.raveline.reciperx.view.fragment.notification
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,26 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.raveline.reciperx.R
-import br.com.raveline.reciperx.viewmodel.DashboardViewModel
+import br.com.raveline.reciperx.viewmodel.NotificationViewModel
 
-class DashboardFragment : Fragment() {
+class RandomFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DashboardFragment()
+        fun newInstance() = RandomFragment()
     }
 
-    private lateinit var viewModel: DashboardViewModel
+    private lateinit var viewModel: NotificationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dashboard_fragment, container, false)
+        return inflater.inflate(R.layout.random_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
