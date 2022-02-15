@@ -30,7 +30,7 @@
                 <ImageView
                     android:id="@+id/imageViewDetailFragmentSavedId"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_300sdp"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
                     android:src="@drawable/food_image" />
