@@ -2,11 +2,154 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="dish"
+            type="br.com.raveline.reciperx.data.model.DishModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewDetailFragmentId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.detail.DishDetailFragment">
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutDetailFragmentId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.fragment.detail.DishDetailFragment">
+
+            <FrameLayout
+                android:id="@+id/frameLayoutDetailFragmentId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDetailFragmentSavedId"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_300sdp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/food_image" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearLayoutDetailFragmentId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:background="@drawable/favorite_button_background">
+
+                    <ImageView
+                        android:id="@+id/imageViewDetailFragmentFavoriteId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_favorite_border_24" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentTitleId"
+                style="@style/Theme.Custom_Title_Detail_Screen_Text_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frameLayoutDetailFragmentId"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@{dish.title}"
+                tools:text="@string/title" />
+
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentTypeId"
+                style="@style/Theme.Custom_Title_Detail_Screen_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentTitleId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@{dish.type}"
+                android:textStyle="bold"
+                tools:text="@string/dish_type" />
+
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentCategoryId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentTypeId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@{dish.category}"
+                tools:text="@string/category_dish" />
+
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentIngredientsId"
+                style="@style/Theme.Custom_Title_Detail_Screen_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentCategoryId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/ingredients_dish" />
+
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentIngredientsValueId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentIngredientsId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@{dish.ingredients}"
+                tools:text="@string/error_ingredients_selected" />
+
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentDirectionToCookId"
+                style="@style/Theme.Custom_Title_Detail_Screen_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentIngredientsValueId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/direction_to_cook_dish" />
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentDirectionToCookValueId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentDirectionToCookId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@{dish.directionsToCook}"
+                tools:text="@string/direction_to_cook_dish" />
+
+            <TextView
+                android:id="@+id/textViewDetailFragmentCookingTimeId"
+                style="@style/Theme.Custom_Font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailFragmentDirectionToCookValueId"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_32sdp"
+                android:text="@string/estimate_cooking_time"
+                android:textColor="@color/gray_oslo" />
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

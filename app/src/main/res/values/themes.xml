@@ -29,4 +29,16 @@
         <item name="fontFamily">@font/montserrat</item>
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
+
+    <style name="Theme.Custom_Title_Detail_Screen_Text_Font" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/_20sdp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.Custom_Title_Detail_Screen_Font" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

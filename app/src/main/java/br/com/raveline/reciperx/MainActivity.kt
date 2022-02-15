@@ -1,14 +1,20 @@
 package br.com.raveline.reciperx
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.raveline.reciperx.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
@@ -36,17 +42,24 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
-    fun hideBottomNavigationView(){
+    fun hideBottomNavigationView() {
         mainBinding.apply {
             bnvMainId.clearAnimation()
-            bnvMainId.animate().translationY(bnvMainId.height.toFloat()).duration = 600
+            bnvMainId.animate().translationY(bnvMainId.height.toFloat()).duration = 300
+        }.also {
+            lifecycleScope.launch {
+                delay(300)
+                mainBinding.bnvMainId.visibility = GONE
+            }
         }
     }
 
-    fun showBottomNavigationView(){
+    fun showBottomNavigationView() {
         mainBinding.apply {
+            bnvMainId.visibility = VISIBLE
             bnvMainId.clearAnimation()
             bnvMainId.animate().translationY(0f).duration = 600
+
         }
     }
 
