@@ -10,6 +10,8 @@ class DishRepository(private val dishDao: DishDao) {
 
     val allDishes = dishDao.selectAllDishes()
 
+    val favoriteDishes = dishDao.selectFavoritesDishes()
+
     @WorkerThread
     suspend fun insertDish(dishModel: DishModel){
         dishDao.insertDish(dishModel)

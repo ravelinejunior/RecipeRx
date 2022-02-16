@@ -10,6 +10,9 @@ sealed interface DishDao {
     @Query("SELECT * FROM DISH_TABLE ORDER BY ID")
     fun selectAllDishes(): Flow<List<DishModel>>
 
+    @Query("SELECT * FROM DISH_TABLE WHERE favoriteDish = 1 ORDER BY ID DESC" )
+    fun selectFavoritesDishes():Flow<List<DishModel>>
+
     @Update
     suspend fun updateDish(dishModel: DishModel)
 

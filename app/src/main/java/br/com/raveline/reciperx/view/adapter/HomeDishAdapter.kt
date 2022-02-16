@@ -12,6 +12,7 @@ import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.ItemAdapterHomeFragmentGridBinding
 import br.com.raveline.reciperx.utils.ListDiffUtil
 import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragment
+import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragmentDirections
 import br.com.raveline.reciperx.view.fragment.home.HomeFragment
 import br.com.raveline.reciperx.view.fragment.home.HomeFragmentDirections
 import br.com.raveline.reciperx.view.fragment.random.RandomFragment
@@ -47,7 +48,8 @@ class HomeDishAdapter(
                 }
 
                 is FavoriteFragment -> {
-
+                    val action = FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish)
+                    fragment.findNavController().navigate(action)
                 }
 
                 is RandomFragment -> {

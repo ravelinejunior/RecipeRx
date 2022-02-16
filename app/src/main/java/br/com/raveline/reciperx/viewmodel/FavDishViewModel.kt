@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class FavDishViewModel(private val repository: DishRepository):ViewModel() {
 
     val allDish = repository.allDishes.asLiveData()
+    val favoriteDishes = repository.favoriteDishes.asLiveData()
 
     fun insert(dishModel: DishModel) = viewModelScope.launch {
         repository.insertDish(dishModel)

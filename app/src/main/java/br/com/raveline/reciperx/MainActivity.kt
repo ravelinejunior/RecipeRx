@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavigationView() {
         mainBinding.apply {
             bnvMainId.clearAnimation()
-            bnvMainId.animate().translationY(bnvMainId.height.toFloat()).duration = 300
+            bnvMainId.animate().translationY(bnvMainId.height.toFloat()).duration = 600
         }.also {
             lifecycleScope.launch {
-                delay(300)
+                delay(600)
                 mainBinding.bnvMainId.visibility = GONE
             }
         }

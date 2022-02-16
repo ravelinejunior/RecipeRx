@@ -66,7 +66,6 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
                 )
             )
 
-
             if (!isFromStart) {
                 Toast.makeText(
                     requireContext(),
@@ -118,7 +117,7 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        if (resource != null) {
+                       /* if (resource != null) {
                             Palette.from(resource.toBitmap()).generate { palette ->
                                 val intColor =
                                     palette?.vibrantSwatch?.rgb ?: palette?.lightVibrantSwatch?.rgb
@@ -127,8 +126,7 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
                                 dBinding.relativeLayoutDetailFragmentId.setBackgroundColor(intColor)
 
                             }
-                        }
-
+                        }*/
 
                         return false
                     }
