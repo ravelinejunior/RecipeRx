@@ -28,4 +28,6 @@
     <string name="random_dish">Random Dish</string>
     <string name="favorites">Favorites</string>
     <string name="estimate_cooking_time">The approximate time required to cook the dish is %1$s minutes</string>
+    <string name="msg_added_to_favorites">Added To Favorites</string>
+    <string name="msg_removed_from_favorites">Removed From Favorites</string>
 </resources>
