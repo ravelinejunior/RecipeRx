@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
@@ -90,8 +91,7 @@ class HomeFragment : Fragment() {
 
         when (item.itemId) {
             R.id.menuNewDishAddId -> {
-                val intent = Intent(context, NewDishActivity::class.java)
-                startActivity(intent)
+                findNavController().navigate(R.id.action_homeFragment_to_newDishActivity)
                 return true
             }
         }

@@ -21,6 +21,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.navigation.navArgs
 import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
@@ -37,6 +38,7 @@ import br.com.raveline.reciperx.utils.Constants.dishCategories
 import br.com.raveline.reciperx.utils.Constants.dishCookingTime
 import br.com.raveline.reciperx.utils.Constants.dishTypes
 import br.com.raveline.reciperx.utils.Constants.galleryIdKey
+import br.com.raveline.reciperx.utils.SystemFunctions.hideKeyboard
 import br.com.raveline.reciperx.view.adapter.CustomSpinnerAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
@@ -66,6 +68,8 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var newDishBinding: ActivityNewDishBinding
     private var mImagePath = ""
 
+    private val args: NewDishActivityArgs? by navArgs()
+
     private val favDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((application as DishApplication).repository)
     }
@@ -76,12 +80,94 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(newDishBinding.root)
         setupActionBar()
 
+        fillDataToEdit()
+
         newDishBinding.imageViewNewDishAddNewImageId.setOnClickListener(this)
         newDishBinding.imageViewNewDishNoImageId.setOnClickListener(this)
         newDishBinding.textInputEditTextCategoryId.setOnClickListener(this)
         newDishBinding.textInputEditTextTypeId.setOnClickListener(this)
         newDishBinding.textInputEditTextCookingTimeId.setOnClickListener(this)
         newDishBinding.buttonNewDishAddNewDishId.setOnClickListener(this)
+    }
+
+    private fun editData() {
+        val title =
+            newDishBinding.textInputEditTextNameId.text.toString().trim { it <= ' ' }
+        val type = newDishBinding.textInputEditTextTypeId.text.toString().trim { it <= ' ' }
+        val category =
+            newDishBinding.textInputEditTextCategoryId.text.toString().trim { it <= ' ' }
+        val ingredients =
+            newDishBinding.textInputEditTextIngredientsId.text.toString().trim { it <= ' ' }
+        val cookingTime =
+            newDishBinding.textInputEditTextCookingTimeId.text.toString().trim { it <= ' ' }
+        val cookingDirection =
+            newDishBinding.textInputEditTextDirectionToCookId.text.toString()
+                .trim { it <= ' ' }
+
+        val dishModel = DishModel(
+
+            id = args?.dish!!.id,
+            title = title,
+            category = category,
+            type = type,
+            imageSource = args?.dish!!.imageSource,
+            image = mImagePath,
+            ingredients = ingredients,
+            cookingTime = cookingTime,
+            directionsToCook = cookingDirection,
+            favoriteDish = args?.dish!!.favoriteDish
+
+        )
+
+        favDishViewModel.updateDish(dishModel)
+
+        Snackbar.make(
+            newDishBinding.root.rootView,
+            resources.getString(R.string.success_editing_message),
+            Snackbar.LENGTH_SHORT
+        )
+            .show().also {
+                finish()
+            }
+
+
+    }
+
+    private fun fillDataToEdit() {
+
+        if (args?.dish != null) {
+            val dish = args?.dish!!
+            newDishBinding.apply {
+
+                buttonNewDishAddNewDishId.text = resources.getString(R.string.edit)
+
+                Glide.with(applicationContext)
+                    .load(dish.image)
+                    .into(imageViewNewDishNoImageId)
+
+                mImagePath = dish.image
+
+                textInputEditTextNameId.setText(dish.title)
+                textInputEditTextCategoryId.setText(dish.category)
+                textInputEditTextTypeId.setText(dish.type)
+                textInputEditTextIngredientsId.setText(dish.ingredients)
+                textInputEditTextCookingTimeId.setText(dish.cookingTime)
+                textInputEditTextDirectionToCookId.setText(dish.directionsToCook)
+
+                Glide.with(applicationContext).load(
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.ic_edit_white
+                    )
+                )
+                    .circleCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(newDishBinding.imageViewNewDishAddNewImageId)
+
+                frameLayoutNewDishId.setBackgroundColor(resources.getColor(R.color.white))
+            }
+        }
+
     }
 
     private fun showCustomDialog() {
@@ -281,6 +367,12 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
             toolbarNewDishId.setNavigationOnClickListener {
                 onBackPressed()
             }
+
+            if (args?.dish != null) {
+                supportActionBar?.let {
+                    it.title = args?.dish!!.title
+                }
+            }
         }
     }
 
@@ -403,6 +495,8 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
             )
 
             R.id.buttonNewDishAddNewDishId -> {
+                hideKeyboard()
+
                 val title =
                     newDishBinding.textInputEditTextNameId.text.toString().trim { it <= ' ' }
                 val type = newDishBinding.textInputEditTextTypeId.text.toString().trim { it <= ' ' }
@@ -515,6 +609,9 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                             )
                             .show()
+                    }
+                    args?.dish != null -> {
+                        editData()
                     }
                     else -> {
                         val dish = DishModel(

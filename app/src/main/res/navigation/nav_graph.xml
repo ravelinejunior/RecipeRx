@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="br.com.raveline.reciperx.view.fragment.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
@@ -23,11 +23,17 @@
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homeFragment_to_dishDetailFragment"
             app:destination="@id/dishDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_newDishActivity"
+            app:destination="@id/newDishActivity"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -38,92 +44,98 @@
         android:id="@+id/dashboardFragment"
         android:name="br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragment"
         android:label="Dashboard"
-        tools:layout="@layout/favorite_fragment" >
+        tools:layout="@layout/favorite_fragment">
         <action
             android:id="@+id/action_dashboardFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_dashboardFragment_to_notificationFragment"
             app:destination="@id/notificationFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_dashboardFragment_to_dishDetailFragment"
             app:destination="@id/dishDetailFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="br.com.raveline.reciperx.view.fragment.random.RandomFragment"
         android:label="Notification"
-        tools:layout="@layout/random_fragment" >
+        tools:layout="@layout/random_fragment">
         <action
             android:id="@+id/action_notificationFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_notificationFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_notificationFragment_to_dishDetailFragment"
             app:destination="@id/dishDetailFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/dishDetailFragment"
         android:name="br.com.raveline.reciperx.view.fragment.detail.DishDetailFragment"
-        android:label="DishDetailFragment" >
+        android:label="DishDetailFragment">
         <action
             android:id="@+id/action_dishDetailFragment_to_notificationFragment"
             app:destination="@id/notificationFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_dishDetailFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_dishDetailFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
+            app:popExitAnim="@android:anim/fade_out" />
         <argument
             android:name="dish"
             app:argType="br.com.raveline.reciperx.data.model.DishModel" />
     </fragment>
+    <activity
+        android:id="@+id/newDishActivity"
+        android:name="br.com.raveline.reciperx.view.activity.NewDishActivity"
+        android:label="NewDishActivity"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@android:anim/fade_out" >
+        <argument
+            android:name="dish"
+            app:argType="br.com.raveline.reciperx.data.model.DishModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </activity>
+
 </navigation>

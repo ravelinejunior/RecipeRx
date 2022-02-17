@@ -22,6 +22,7 @@
     <string name="error_ingredients_selected">Ingredients must not be empty</string>
     <string name="error_cooking_time_selected">You must select the time to cook this recipe</string>
     <string name="success_message">Success</string>
+    <string name="success_editing_message">Success Editing</string>
     <string name="default_dish_error_message">Something went wrong</string>
     <string name="error_cooking_direction_selected">Please set the cooking directions to this recipe</string>
     <string name="title">Title</string>
@@ -32,6 +33,8 @@
     <string name="msg_removed_from_favorites">Removed From Favorites</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="msg_delete_dish">Delete Dish</string>
+    <string name="msg_confirm_delete_dish_message">Are you sure that you want to delete this dish?</string>
     <string name="msg_delete_fav_dishes">Delete Favorites Dishes</string>
     <string name="msg_confirm_delete_message">Are you sure that you want to delete all your favorites recipes?</string>
 </resources>
