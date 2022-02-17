@@ -31,6 +31,7 @@
     <string name="msg_added_to_favorites">Added To Favorites</string>
     <string name="msg_removed_from_favorites">Removed From Favorites</string>
     <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
     <string name="msg_delete_fav_dishes">Delete Favorites Dishes</string>
     <string name="msg_confirm_delete_message">Are you sure that you want to delete all your favorites recipes?</string>
 </resources>

@@ -1,7 +1,11 @@
 package br.com.raveline.reciperx.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -20,11 +24,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeDishAdapter(
-    private val fragment:Fragment
+    private val fragment: Fragment
 ) :
     RecyclerView.Adapter<HomeDishAdapter.MyViewHolder>() {
 
-   private var dishes = listOf<DishModel>()
+    private var dishes = listOf<DishModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val hBinding = ItemAdapterHomeFragmentGridBinding.inflate(
@@ -38,17 +42,18 @@ class HomeDishAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val dish = dishes[position]
         holder.bind(dish)
+        holder.showPopupOptions(dish)
 
         holder.itemView.setOnClickListener {
-            when(fragment){
+            when (fragment) {
                 is HomeFragment -> {
-
                     val action = HomeFragmentDirections.actionHomeFragmentToDishDetailFragment(dish)
                     fragment.findNavController().navigate(action)
                 }
 
                 is FavoriteFragment -> {
-                    val action = FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish)
+                    val action =
+                        FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish)
                     fragment.findNavController().navigate(action)
                 }
 
@@ -79,6 +84,44 @@ class HomeDishAdapter(
                         )
                     )
                     .into(imageViewHomeAdapterId)
+            }
+        }
+
+        fun showPopupOptions(dish: DishModel) {
+            hBinding.imageButtonHomeAdapterAddPopupId.setOnClickListener {
+                val popup =
+                    PopupMenu(fragment.requireContext(), hBinding.imageButtonHomeAdapterAddPopupId)
+                popup.menuInflater.inflate(R.menu.menu_adapter_popup, popup.menu)
+
+                popup.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menuPopupEditId -> {
+                            Toast.makeText(
+                                fragment.requireContext(),
+                                dish.title,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        R.id.menuPopupDeleteId -> {
+                            Toast.makeText(
+                                fragment.requireContext(),
+                                dish.category,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    popup.dismiss()
+                    true
+                }
+
+                popup.show()
+            }
+
+            if (fragment is HomeFragment) {
+                hBinding.imageButtonHomeAdapterAddPopupId.visibility = VISIBLE
+            } else {
+                hBinding.imageButtonHomeAdapterAddPopupId.visibility = GONE
+
             }
         }
 

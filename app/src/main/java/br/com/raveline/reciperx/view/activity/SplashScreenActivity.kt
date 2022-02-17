@@ -50,7 +50,7 @@ class SplashScreenActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animation?) {
                 lifecycleScope.launch {
 
-                    delay(3000).run {
+                    delay(2000).run {
                         val intent = Intent(this@SplashScreenActivity,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
