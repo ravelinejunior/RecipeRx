@@ -37,4 +37,6 @@
     <string name="msg_confirm_delete_dish_message">Are you sure that you want to delete this dish?</string>
     <string name="msg_delete_fav_dishes">Delete Favorites Dishes</string>
     <string name="msg_confirm_delete_message">Are you sure that you want to delete all your favorites recipes?</string>
+    <string name="filter">Filter</string>
+    <string name="title_select_item_to_filter">SELECT AN ITEM TO FILTER</string>
 </resources>

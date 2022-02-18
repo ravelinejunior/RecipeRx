@@ -1,5 +1,6 @@
 package br.com.raveline.reciperx.view.fragment.home
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
@@ -9,10 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.databinding.DialogCustomSpinnerDataBinding
 import br.com.raveline.reciperx.databinding.HomeFragmentBinding
+import br.com.raveline.reciperx.utils.Constants.ALL_ITEMS_STRING
+import br.com.raveline.reciperx.utils.Constants.DISH_FILTER_SELECTION
+import br.com.raveline.reciperx.utils.Constants.dishTypes
+import br.com.raveline.reciperx.view.adapter.CustomSpinnerAdapter
 import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.HomeViewModel
@@ -27,7 +34,7 @@ class HomeFragment : Fragment() {
         FavDishViewModelFactory((requireActivity().application as DishApplication).repository)
     }
 
-    private lateinit var homeDishAdapter:HomeDishAdapter
+    private lateinit var homeDishAdapter: HomeDishAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +79,31 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun filterDishesDialog() {
+
+        val customListDialog = Dialog(requireContext())
+        val dialogBinding = DialogCustomSpinnerDataBinding.inflate(layoutInflater)
+
+        customListDialog.setContentView(dialogBinding.root)
+        dialogBinding.textViewCustomSpinnerId.text =
+            resources.getString(R.string.title_select_item_to_filter)
+        val dishTypes = dishTypes()
+        dishTypes.add(0, ALL_ITEMS_STRING)
+
+        dialogBinding.recyclerViewCustomSpinnerId.layoutManager =
+            LinearLayoutManager(requireContext())
+
+        val cAdapter = CustomSpinnerAdapter(requireActivity(), DISH_FILTER_SELECTION, dishTypes)
+
+        dialogBinding.recyclerViewCustomSpinnerId.adapter = cAdapter
+
+        customListDialog.show()
+
+
+    }
+
     private fun setupRecyclerView() {
-        homeDishAdapter = HomeDishAdapter(this,favDishViewModel)
+        homeDishAdapter = HomeDishAdapter(this, favDishViewModel)
         homeFragmentBinding.recyclerViewHomeFragmentId.apply {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
@@ -91,6 +121,11 @@ class HomeFragment : Fragment() {
         when (item.itemId) {
             R.id.menuNewDishAddId -> {
                 findNavController().navigate(R.id.action_homeFragment_to_newDishActivity)
+                return true
+            }
+
+            R.id.menuNewDishFilterId -> {
+                filterDishesDialog()
                 return true
             }
         }

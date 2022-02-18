@@ -2,11 +2,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:id="@+id/menuNewDishFilterId"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/menuNewDishAddId"
         android:title="@string/new_dish"
         android:icon="@drawable/ic_empty_add_white"
         app:showAsAction="ifRoom"
-
         />
 </menu>
