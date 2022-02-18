@@ -1,5 +1,6 @@
 package br.com.raveline.reciperx.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -28,6 +29,8 @@ class FavDishViewModel(private val repository: DishRepository):ViewModel() {
     fun deleteDishes() = viewModelScope.launch {
         repository.deleteAllDishes()
     }
+
+    fun getDishesByFilter(value:String): LiveData<List<DishModel>> = repository.getDishesByFilter(value).asLiveData()
 
 
 

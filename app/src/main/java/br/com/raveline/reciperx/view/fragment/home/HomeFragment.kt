@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.DialogCustomSpinnerDataBinding
 import br.com.raveline.reciperx.databinding.HomeFragmentBinding
 import br.com.raveline.reciperx.utils.Constants.ALL_ITEMS_STRING
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
         FavDishViewModelFactory((requireActivity().application as DishApplication).repository)
     }
 
+    private lateinit var customListDialog: Dialog
     private lateinit var homeDishAdapter: HomeDishAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,28 +62,28 @@ class HomeFragment : Fragment() {
         }
 
         favDishViewModel.allDish.observe(viewLifecycleOwner) { dishes ->
-            dishes.let {
-                if (dishes.isNotEmpty()) {
-                    homeDishAdapter.setData(dishes)
-                    homeFragmentBinding.recyclerViewHomeFragmentId.apply {
-                        visibility = VISIBLE
-                    }
-                    homeFragmentBinding.lottieViewHomeFragmentId.visibility = GONE
-                } else {
-                    homeFragmentBinding.recyclerViewHomeFragmentId.apply {
-                        visibility = GONE
-                    }
-                    homeFragmentBinding.lottieViewHomeFragmentId.visibility = VISIBLE
-                }
-
-            }
+            verifyDishes(dishes)
         }
 
     }
 
+    fun filterSelection(filterSelection:String){
+        customListDialog.dismiss()
+
+        if(filterSelection == ALL_ITEMS_STRING){
+            favDishViewModel.allDish.observe(viewLifecycleOwner) { dishes ->
+                verifyDishes(dishes)
+            }
+        }else{
+            favDishViewModel.getDishesByFilter(filterSelection).observe(viewLifecycleOwner){ dishes ->
+                verifyDishes(dishes)
+            }
+        }
+    }
+
     private fun filterDishesDialog() {
 
-        val customListDialog = Dialog(requireContext())
+        customListDialog = Dialog(requireContext())
         val dialogBinding = DialogCustomSpinnerDataBinding.inflate(layoutInflater)
 
         customListDialog.setContentView(dialogBinding.root)
@@ -93,12 +95,11 @@ class HomeFragment : Fragment() {
         dialogBinding.recyclerViewCustomSpinnerId.layoutManager =
             LinearLayoutManager(requireContext())
 
-        val cAdapter = CustomSpinnerAdapter(requireActivity(), DISH_FILTER_SELECTION, dishTypes)
+        val cAdapter = CustomSpinnerAdapter(requireActivity(),this, DISH_FILTER_SELECTION, dishTypes)
 
         dialogBinding.recyclerViewCustomSpinnerId.adapter = cAdapter
 
         customListDialog.show()
-
 
     }
 
@@ -108,6 +109,21 @@ class HomeFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
             adapter = homeDishAdapter
+        }
+    }
+
+    private fun verifyDishes(dishes:List<DishModel>){
+        if (dishes.isNotEmpty()) {
+            homeDishAdapter.setData(dishes)
+            homeFragmentBinding.recyclerViewHomeFragmentId.apply {
+                visibility = VISIBLE
+            }
+            homeFragmentBinding.lottieViewHomeFragmentId.visibility = GONE
+        } else {
+            homeFragmentBinding.recyclerViewHomeFragmentId.apply {
+                visibility = GONE
+            }
+            homeFragmentBinding.lottieViewHomeFragmentId.visibility = VISIBLE
         }
     }
 
@@ -131,5 +147,6 @@ class HomeFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 }
