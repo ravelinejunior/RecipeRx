@@ -24,7 +24,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private lateinit var favoriteBinding: FavoriteFragmentBinding
-    private val dishAdapter = HomeDishAdapter(this)
+    private val dishAdapter = HomeDishAdapter(this,null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

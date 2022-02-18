@@ -26,7 +26,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeDishAdapter(
     private val fragment: Fragment,
-    private val favDishViewModel: FavDishViewModel? = null
+    private val favDishViewModel: FavDishViewModel?
 ) :
     RecyclerView.Adapter<HomeDishAdapter.MyViewHolder>() {
 
@@ -140,7 +140,7 @@ class HomeDishAdapter(
     }
 
     private fun deleteFavorite(dish: DishModel) {
-        favDishViewModel?.deleteDish(dish)
+        favDishViewModel!!.deleteDish(dish)
     }
 
     fun setData(dishList: List<DishModel>) {

@@ -1,6 +1,5 @@
 package br.com.raveline.reciperx.view.fragment.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
@@ -14,7 +13,6 @@ import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.databinding.HomeFragmentBinding
-import br.com.raveline.reciperx.view.activity.NewDishActivity
 import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.HomeViewModel
@@ -25,11 +23,11 @@ class HomeFragment : Fragment() {
     private lateinit var homeFragmentBinding: HomeFragmentBinding
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val homeDishAdapter = HomeDishAdapter(this)
-
     private val favDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as DishApplication).repository)
     }
+
+    private lateinit var homeDishAdapter:HomeDishAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +57,6 @@ class HomeFragment : Fragment() {
                 if (dishes.isNotEmpty()) {
                     homeDishAdapter.setData(dishes)
                     homeFragmentBinding.recyclerViewHomeFragmentId.apply {
-                        adapter = homeDishAdapter
                         visibility = VISIBLE
                     }
                     homeFragmentBinding.lottieViewHomeFragmentId.visibility = GONE
@@ -76,9 +73,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        homeDishAdapter = HomeDishAdapter(this,favDishViewModel)
         homeFragmentBinding.recyclerViewHomeFragmentId.apply {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
+            adapter = homeDishAdapter
         }
     }
 
