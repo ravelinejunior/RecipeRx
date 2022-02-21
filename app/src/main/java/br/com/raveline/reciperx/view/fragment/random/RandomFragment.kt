@@ -9,21 +9,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.databinding.RandomFragmentBinding
 import br.com.raveline.reciperx.viewmodel.NotificationViewModel
 
 class RandomFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = RandomFragment()
-    }
-
-    private lateinit var viewModel: NotificationViewModel
+    private var randomBinding:RandomFragmentBinding?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.random_fragment, container, false)
+    ): View {
+        randomBinding = RandomFragmentBinding.inflate(inflater,container,false)
+        return randomBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,5 +34,9 @@ class RandomFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        randomBinding = null
+    }
 
 }

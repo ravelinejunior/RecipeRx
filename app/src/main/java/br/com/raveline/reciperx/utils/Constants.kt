@@ -19,6 +19,12 @@ object Constants {
     // DATABASE
     const val DISH_TABLE_NAME = "DISH_TABLE"
     const val DISH_DATABASE_NAME = "DISH_DATABASE"
+    const val RECIPES_TABLE_NAME = "RECIPES_TABLE"
+
+    // REMOTE
+    const val BASE_URL = "https://api.spoonacular.com/recipes/"
+    const val API_KEY = "51dfabcd9128422bbf0ba3eee8abfa4b"
+    const val API_KEY_TWO = "433b42674ee94a64ad420e101000eb79"
 
     // DISHES CONSTANTS
     const val DISH_TYPE = "DishType"
