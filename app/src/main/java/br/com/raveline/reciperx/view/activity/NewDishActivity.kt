@@ -348,7 +348,7 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
         customDialog = Dialog(this)
         val dialogBinding: DialogCustomSpinnerDataBinding =
             DialogCustomSpinnerDataBinding.inflate(layoutInflater)
-        val customAdapter = CustomSpinnerAdapter(this, selected, items)
+        val customAdapter = CustomSpinnerAdapter(this, null,selected, items)
         customDialog.setContentView(dialogBinding.root)
 
         dialogBinding.apply {

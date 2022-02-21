@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 class DishRepository(private val dishDao: DishDao) {
 
-
     val allDishes = dishDao.selectAllDishes()
 
     val favoriteDishes = dishDao.selectFavoritesDishes()
@@ -31,5 +30,8 @@ class DishRepository(private val dishDao: DishDao) {
     suspend fun deleteAllDishes(){
         dishDao.deleteAllDishes()
     }
+
+    @WorkerThread
+    fun getDishesByFilter(value:String) : Flow<List<DishModel>> = dishDao.selectDishByFilter(value)
 
 }
