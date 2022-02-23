@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 sealed interface RecipesApiServices{
     @GET("random")
-    suspend fun getRandomRecipes(
+     fun getRandomRecipes(
         @Query("apiKey") apiKey:String = API_KEY,
         @Query("number") number:Int = 200,
         @Query("tags") tags:String = "main course"

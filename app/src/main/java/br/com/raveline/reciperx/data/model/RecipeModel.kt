@@ -6,6 +6,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import br.com.raveline.reciperx.utils.Constants.RECIPES_TABLE_NAME
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Keep
 @Entity(tableName = RECIPES_TABLE_NAME)
@@ -79,4 +81,4 @@ data class RecipeModel(
     val veryPopular: Boolean?,
     @SerializedName("weightWatcherSmartPoints")
     val weightWatcherSmartPoints: Int?
-)
+):Serializable

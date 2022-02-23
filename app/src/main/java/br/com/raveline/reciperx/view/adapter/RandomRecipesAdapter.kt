@@ -1,6 +1,5 @@
 package br.com.raveline.reciperx.view.adapter
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,25 +11,27 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.raveline.reciperx.R
-import br.com.raveline.reciperx.data.model.DishModel
+import br.com.raveline.reciperx.data.model.RecipeModel
+import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.databinding.ItemAdapterHomeFragmentGridBinding
 import br.com.raveline.reciperx.utils.ListDiffUtil
-import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragment
-import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragmentDirections
+import br.com.raveline.reciperx.utils.SystemFunctions.loadImage
 import br.com.raveline.reciperx.view.fragment.home.HomeFragment
 import br.com.raveline.reciperx.view.fragment.home.HomeFragmentDirections
 import br.com.raveline.reciperx.view.fragment.random.RandomFragment
-import br.com.raveline.reciperx.viewmodel.FavDishViewModel
+import br.com.raveline.reciperx.view.fragment.random.RandomFragmentDirections
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class HomeDishAdapter(
+class RandomRecipesAdapter(
     private val fragment: Fragment,
-    private val favDishViewModel: FavDishViewModel?
 ) :
-    RecyclerView.Adapter<HomeDishAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<RandomRecipesAdapter.MyViewHolder>() {
 
-    private var dishes = listOf<DishModel>()
+    private lateinit var recipes: Recipes
+    private var drawable =
+        "https://www.prestashop.com/sites/default/files/styles/blog_750x320/public/blog/pt/files/2013/12/http_code_404_error.jpg?itok=uFS5CFuQ"
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val hBinding = ItemAdapterHomeFragmentGridBinding.inflate(
@@ -42,54 +43,45 @@ class HomeDishAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val dish = dishes[position]
-        holder.bind(dish)
-        holder.showPopupOptions(dish)
+        val recipe = recipes.recipeModels[position]
+        holder.bind(recipe)
+        holder.showPopupOptions(recipe)
 
         holder.itemView.setOnClickListener {
             when (fragment) {
-                is HomeFragment -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToDishDetailFragment(dish,null)
-                    fragment.findNavController().navigate(action)
-                }
-
-                is FavoriteFragment -> {
-                    val action =
-                        FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish,null)
-                    fragment.findNavController().navigate(action)
-                }
-
                 is RandomFragment -> {
-
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToDishDetailFragment(null, recipe)
+                    fragment.findNavController().navigate(action)
                 }
             }
         }
     }
 
-    override fun getItemCount(): Int = dishes.size
+    override fun getItemCount(): Int = recipes.recipeModels.size
 
     inner class MyViewHolder(private val hBinding: ItemAdapterHomeFragmentGridBinding) :
         RecyclerView.ViewHolder(hBinding.root) {
 
-        fun bind(dish: DishModel) {
+        fun bind(recipe: RecipeModel) {
             hBinding.apply {
 
-                textViewHomeAdapterTitleId.text = dish.title
+                textViewHomeAdapterTitleId.text = recipe.title
 
-                Glide.with(imageViewHomeAdapterId.context)
-                    .load(dish.image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            imageViewHomeAdapterId.context,
-                            R.drawable.giphy
-                        )
-                    )
-                    .into(imageViewHomeAdapterId)
+               if (recipe.image.isNullOrEmpty()){
+                   Glide.with(imageViewHomeAdapterId.context)
+                       .load(drawable)
+                       .diskCacheStrategy(DiskCacheStrategy.ALL)
+                       .into(imageViewHomeAdapterId)
+               }else{
+
+                   loadImage(imageViewHomeAdapterId,recipe.image)
+
+               }
             }
         }
 
-        fun showPopupOptions(dish: DishModel) {
+        fun showPopupOptions(recipe: RecipeModel) {
             hBinding.imageButtonHomeAdapterAddPopupId.setOnClickListener {
                 val popup =
                     PopupMenu(fragment.requireContext(), hBinding.imageButtonHomeAdapterAddPopupId)
@@ -100,13 +92,11 @@ class HomeDishAdapter(
                         R.id.menuPopupEditId -> {
 
                             val action =
-                                HomeFragmentDirections.actionHomeFragmentToNewDishActivity(null)
-                                    .setDish(dish)
+                                RandomFragmentDirections.actionNotificationFragmentToDishDetailFragment(
+                                    null,
+                                    recipe
+                                )
                             fragment.findNavController().navigate(action)
-                        }
-
-                        R.id.menuPopupDeleteId -> {
-                            showDeleteDialog(dish)
                         }
                     }
                     popup.dismiss()
@@ -126,27 +116,12 @@ class HomeDishAdapter(
 
     }
 
-    private fun showDeleteDialog(dish: DishModel) {
-        AlertDialog.Builder(fragment.requireContext())
-            .setTitle(fragment.resources.getString(R.string.msg_delete_dish))
-            .setMessage(fragment.resources.getString(R.string.msg_confirm_delete_dish_message))
-            .setPositiveButton("Yes") { dialog, _ ->
-                deleteFavorite(dish)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }.show()
-    }
 
-    private fun deleteFavorite(dish: DishModel) {
-        favDishViewModel!!.deleteDish(dish)
-    }
-
-    fun setData(dishList: List<DishModel>) {
-        val listDiffUtils = ListDiffUtil(dishes, dishList)
+    fun setData(recipesList: Recipes) {
+        recipes = Recipes(emptyList())
+        val listDiffUtils = ListDiffUtil(recipes.recipeModels, recipesList.recipeModels)
         val dispatchersResult = DiffUtil.calculateDiff(listDiffUtils)
-        dishes = dishList
+        recipes = recipesList
         dispatchersResult.dispatchUpdatesTo(this)
     }
 

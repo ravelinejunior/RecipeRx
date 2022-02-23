@@ -42,7 +42,7 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
         dBinding.dish = args.dish
         dBinding.lifecycleOwner = this
 
-        displayData(args.dish)
+        displayData(args.dish!!)
 
         return dBinding.root
     }
@@ -57,7 +57,7 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setFavoriteIconChange(isFromStart: Boolean) {
-        if (args.dish.favoriteDish) {
+        if (args.dish!!.favoriteDish) {
 
             dBinding.imageViewDetailFragmentFavoriteId.setImageDrawable(
                 getDrawable(
@@ -144,8 +144,8 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
             R.id.linearLayoutDetailFragmentId,
             R.id.imageViewDetailFragmentFavoriteId -> {
-                args.dish.favoriteDish = !args.dish.favoriteDish
-                favViewDishModel.updateDish(args.dish)
+                args.dish!!.favoriteDish = !args.dish!!.favoriteDish
+                favViewDishModel.updateDish(args.dish!!)
                 setFavoriteIconChange(false)
             }
         }

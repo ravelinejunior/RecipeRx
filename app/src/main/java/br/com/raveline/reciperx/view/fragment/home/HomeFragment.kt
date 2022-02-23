@@ -23,13 +23,12 @@ import br.com.raveline.reciperx.utils.Constants.dishTypes
 import br.com.raveline.reciperx.view.adapter.CustomSpinnerAdapter
 import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
-import br.com.raveline.reciperx.viewmodel.HomeViewModel
+import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeFragmentBinding: HomeFragmentBinding
-    private val homeViewModel: HomeViewModel by viewModels()
 
     private val favDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as DishApplication).repository)
