@@ -3,7 +3,6 @@ package br.com.raveline.reciperx
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.homeFragment,
                 R.id.dashboardFragment,
-                R.id.notificationFragment
+                R.id.randomFragment
             )
         )
 

@@ -19,7 +19,6 @@ import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragment
 import br.com.raveline.reciperx.view.fragment.favorite.FavoriteFragmentDirections
 import br.com.raveline.reciperx.view.fragment.home.HomeFragment
 import br.com.raveline.reciperx.view.fragment.home.HomeFragmentDirections
-import br.com.raveline.reciperx.view.fragment.random.RandomFragment
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -49,18 +48,15 @@ class HomeDishAdapter(
         holder.itemView.setOnClickListener {
             when (fragment) {
                 is HomeFragment -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToDishDetailFragment(dish,null)
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToDishDetailFragment(dish)
                     fragment.findNavController().navigate(action)
                 }
 
                 is FavoriteFragment -> {
                     val action =
-                        FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish,null)
+                        FavoriteFragmentDirections.actionDashboardFragmentToDishDetailFragment(dish)
                     fragment.findNavController().navigate(action)
-                }
-
-                is RandomFragment -> {
-
                 }
             }
         }
@@ -100,7 +96,7 @@ class HomeDishAdapter(
                         R.id.menuPopupEditId -> {
 
                             val action =
-                                HomeFragmentDirections.actionHomeFragmentToNewDishActivity(null)
+                                HomeFragmentDirections.actionHomeFragmentToNewDishActivity()
                                     .setDish(dish)
                             fragment.findNavController().navigate(action)
                         }

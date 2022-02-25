@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 sealed interface DishDao {
 
-    @Query("SELECT * FROM DISH_TABLE ORDER BY ID")
+    @Query("SELECT * FROM DISH_TABLE WHERE isFromRandom = 0 ORDER BY ID")
     fun selectAllDishes(): Flow<List<DishModel>>
 
     @Query("SELECT * FROM DISH_TABLE WHERE type == :value ORDER BY ID")
-    fun selectDishByFilter(value:String): Flow<List<DishModel>>
+    fun selectDishByFilter(value: String): Flow<List<DishModel>>
 
-    @Query("SELECT * FROM DISH_TABLE WHERE favoriteDish = 1 ORDER BY ID DESC" )
-    fun selectFavoritesDishes():Flow<List<DishModel>>
+    @Query("SELECT * FROM DISH_TABLE WHERE favoriteDish = 1 ORDER BY ID DESC")
+    fun selectFavoritesDishes(): Flow<List<DishModel>>
 
     @Update
     suspend fun updateDish(dishModel: DishModel)

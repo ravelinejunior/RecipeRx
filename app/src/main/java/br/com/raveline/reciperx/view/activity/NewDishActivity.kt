@@ -368,11 +368,19 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
 
-            if (args?.dish != null) {
-                supportActionBar?.let {
-                    it.title = args?.dish!!.title
-                }
-            }
+          try{
+              if(args != null){
+                  if (args?.dish != null) {
+                      supportActionBar?.let {
+                          it.title = args?.dish!!.title
+                      }
+                  }
+              }
+          }catch (e:Exception){
+              supportActionBar?.let {
+                  it.title = "New Dish"
+              }
+          }
         }
     }
 

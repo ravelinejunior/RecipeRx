@@ -27,10 +27,15 @@
         <entry key="app/src/main/res/layout/activity_new_dish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/dialog_custom_select_image.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/dish_detail_fragment.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/item_adapter_home_fragment_grid.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/layout/random_fragment.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/menu/menu_adapter_popup.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/menu/menu_fav_dish.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/menu/menu_nav_bottom.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/menu_new_dishe.xml" value="0.19375" />
+        <entry key="app/src/main/res/menu/menu_random_adapter_popup.xml" value="0.19635416666666666" />
       </map>
     </option>
   </component>

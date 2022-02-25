@@ -12,7 +12,8 @@
     <string name="cooking_time_minutes_dish">Cooking Time in Minutes</string>
     <string name="direction_to_cook_dish">Direction to Cook</string>
     <string name="add_new_dish">Add New Dish</string>
-    <string name="camera">Câmera</string>
+    <string name="add_this_dish">Add This Dish</string>
+    <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="select_action_image">Select Action Image</string>
     <string name="error_image_selected">You must select a message to continue</string>
@@ -39,4 +40,6 @@
     <string name="msg_confirm_delete_message">Are you sure that you want to delete all your favorites recipes?</string>
     <string name="filter">Filter</string>
     <string name="title_select_item_to_filter">SELECT AN ITEM TO FILTER</string>
+    <string name="msg_insert_on_main">Insert on your dihes</string>
+    <string name="msg_insert_this_on_your">Insert this dish on your database?</string>
 </resources>

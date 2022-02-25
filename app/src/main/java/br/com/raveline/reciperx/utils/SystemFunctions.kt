@@ -11,9 +11,13 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import br.com.raveline.reciperx.data.model.DishModel
+import br.com.raveline.reciperx.data.model.RecipeModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import org.jsoup.Jsoup
 import java.io.ByteArrayOutputStream
+import kotlin.random.Random
 
 
 object SystemFunctions {
@@ -61,5 +65,22 @@ object SystemFunctions {
             MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Image", null)
         return Uri.parse(path)
     }
+
+    fun recipeToDish(recipe: RecipeModel): DishModel =
+        DishModel(
+            image = recipe.image ?: String(),
+            imageSource = Constants.DISH_IMAGE_SOURCE_REMOTE,
+            type = recipe.dishTypes?.map {
+                it
+            }.toString().replace("[", "").replace("]", ""),
+            title = recipe.title ?: String(),
+            category = recipe.diets?.map {
+                it
+            }.toString().replace("[", "").replace("]", ""),
+            cookingTime = recipe.readyInMinutes?.toString() ?: String(),
+            ingredients = Jsoup.parse(recipe.summary.toString()).text() ?: String(),
+            directionsToCook = Jsoup.parse(recipe.instructions.toString()).text() ?: String(),
+
+        )
 
 }

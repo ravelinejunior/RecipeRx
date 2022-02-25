@@ -4,9 +4,11 @@ package br.com.raveline.reciperx.data.model
 import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import br.com.raveline.reciperx.utils.Constants.DISH_IMAGE_SOURCE_REMOTE
 import br.com.raveline.reciperx.utils.Constants.RECIPES_TABLE_NAME
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import org.jsoup.Jsoup
 import java.io.Serializable
 
 @Keep
@@ -25,7 +27,7 @@ data class RecipeModel(
     @SerializedName("diets")
     val diets: List<String>?,
     @SerializedName("dishTypes")
-    val dishTypes: List<Any>?,
+    val dishTypes: List<String>?,
     @SerializedName("gaps")
     val gaps: String?,
     @SerializedName("glutenFree")

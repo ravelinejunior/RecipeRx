@@ -10,32 +10,36 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.databinding.RandomFragmentBinding
 import br.com.raveline.reciperx.view.adapter.RandomRecipesAdapter
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
+import br.com.raveline.reciperx.viewmodel.factories.RandomViewModelFactory
 import kotlinx.coroutines.flow.collect
 
 class RandomFragment : Fragment() {
 
     private var randomBinding: RandomFragmentBinding? = null
-    private val randomViewModel: RandomViewModel by viewModels()
-
-    private val randomAdapter = RandomRecipesAdapter(this)
+    private val randomViewModel: RandomViewModel by viewModels {
+        RandomViewModelFactory((requireActivity().application as DishApplication).repository)
+    }
+    private lateinit var randomAdapter: RandomRecipesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         randomBinding = RandomFragmentBinding.inflate(inflater, container, false)
+        randomAdapter = RandomRecipesAdapter(this, randomViewModel)
         setObservables()
         return randomBinding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenResumed {
 
             randomViewModel.getRandomRecipes()
 

@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_healthyfood"
         android:title="@string/favorites" />
     <item
-        android:id="@+id/notificationFragment"
+        android:id="@+id/randomFragment"
         android:icon="@drawable/ic_randomfood"
         android:title="@string/random_dish" />
 </menu>
