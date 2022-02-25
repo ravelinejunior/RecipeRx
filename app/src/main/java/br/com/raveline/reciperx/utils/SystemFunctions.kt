@@ -10,6 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
@@ -21,6 +24,16 @@ import kotlin.random.Random
 
 
 object SystemFunctions {
+
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        observe(lifecycleOwner, object : Observer<T> {
+            override fun onChanged(t: T) {
+                removeObserver(this)
+                observer.onChanged(t)
+            }
+        })
+    }
+
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }

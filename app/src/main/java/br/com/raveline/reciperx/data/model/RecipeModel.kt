@@ -4,11 +4,10 @@ package br.com.raveline.reciperx.data.model
 import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import br.com.raveline.reciperx.utils.Constants.DISH_IMAGE_SOURCE_REMOTE
+import androidx.room.TypeConverters
+import br.com.raveline.reciperx.data.database.converter.Converter
 import br.com.raveline.reciperx.utils.Constants.RECIPES_TABLE_NAME
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import org.jsoup.Jsoup
 import java.io.Serializable
 
 @Keep
@@ -20,13 +19,16 @@ data class RecipeModel(
     val cheap: Boolean?,
     @SerializedName("creditsText")
     val creditsText: String?,
+    @TypeConverters(Converter::class)
     @SerializedName("cuisines")
-    val cuisines: List<Any>?,
+    val cuisines: List<String>?,
     @SerializedName("dairyFree")
     val dairyFree: Boolean?,
+    @TypeConverters(Converter::class)
     @SerializedName("diets")
     val diets: List<String>?,
     @SerializedName("dishTypes")
+    @TypeConverters(Converter::class)
     val dishTypes: List<String>?,
     @SerializedName("gaps")
     val gaps: String?,
@@ -50,9 +52,11 @@ data class RecipeModel(
     @SerializedName("lowFodmap")
     val lowFoodMap: Boolean?,
     @SerializedName("occasions")
-    val occasions: List<Any>?,
+    @TypeConverters(Converter::class)
+    val occasions: List<String>?,
     @SerializedName("originalId")
-    val originalId: Any?,
+    @TypeConverters(Converter::class)
+    val originalId: String?,
     @SerializedName("pricePerServing")
     val pricePerServing: Double?,
     @SerializedName("readyInMinutes")
@@ -83,4 +87,4 @@ data class RecipeModel(
     val veryPopular: Boolean?,
     @SerializedName("weightWatcherSmartPoints")
     val weightWatcherSmartPoints: Int?
-):Serializable
+) : Serializable

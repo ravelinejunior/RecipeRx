@@ -6,6 +6,9 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class NetworkListeners : ConnectivityManager.NetworkCallback() {
@@ -41,4 +44,6 @@ class NetworkListeners : ConnectivityManager.NetworkCallback() {
     override fun onLost(network: Network) {
         isNetworkAvailable.value = false
     }
+
+
 }

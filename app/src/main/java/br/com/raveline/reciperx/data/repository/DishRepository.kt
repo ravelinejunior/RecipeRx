@@ -2,18 +2,33 @@ package br.com.raveline.reciperx.data.repository
 
 import androidx.annotation.WorkerThread
 import br.com.raveline.reciperx.data.database.dao.DishDao
+import br.com.raveline.reciperx.data.database.dao.RecipeDao
 import br.com.raveline.reciperx.data.model.DishModel
+import br.com.raveline.reciperx.data.model.RecipeModel
+import br.com.raveline.reciperx.data.model.Recipes
 import kotlinx.coroutines.flow.Flow
 
-class DishRepository(private val dishDao: DishDao) {
+class DishRepository(private val dishDao: DishDao,private val recipeDao: RecipeDao) {
 
     val allDishes = dishDao.selectAllDishes()
 
     val favoriteDishes = dishDao.selectFavoritesDishes()
 
+    val allRecipes = recipeDao.selectAllFromRecipes()
+
     @WorkerThread
     suspend fun insertDish(dishModel: DishModel){
         dishDao.insertDish(dishModel)
+    }
+
+    @WorkerThread
+    suspend fun insertRecipes(recipes: List<RecipeModel>){
+        recipeDao.insertRecipes(recipes)
+    }
+
+    @WorkerThread
+    suspend fun deleteAllRecipes(){
+        recipeDao.deleteAllRecipes()
     }
 
     @WorkerThread

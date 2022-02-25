@@ -4,18 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import br.com.raveline.reciperx.data.database.converter.Converter
 import br.com.raveline.reciperx.data.database.dao.DishDao
+import br.com.raveline.reciperx.data.database.dao.RecipeDao
 import br.com.raveline.reciperx.data.model.DishModel
+import br.com.raveline.reciperx.data.model.RecipeModel
 import br.com.raveline.reciperx.utils.Constants.DISH_DATABASE_NAME
 
 @Database(
-    entities = [DishModel::class],
+    entities = [DishModel::class,RecipeModel::class],
     version = 1,
     exportSchema = true
 )
+@TypeConverters(Converter::class)
 abstract class DishDatabase : RoomDatabase() {
 
     abstract fun dishDao(): DishDao
+    abstract fun recipeDao(): RecipeDao
 
     companion object {
         @Volatile

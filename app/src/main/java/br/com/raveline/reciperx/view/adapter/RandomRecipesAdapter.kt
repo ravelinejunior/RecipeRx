@@ -37,7 +37,7 @@ class RandomRecipesAdapter(
 ) :
     RecyclerView.Adapter<RandomRecipesAdapter.MyViewHolder>() {
 
-    private lateinit var recipes: Recipes
+    private lateinit var recipes: List<RecipeModel>
     private var drawable =
         "https://www.prestashop.com/sites/default/files/styles/blog_750x320/public/blog/pt/files/2013/12/http_code_404_error.jpg?itok=uFS5CFuQ"
 
@@ -51,7 +51,7 @@ class RandomRecipesAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val recipe = recipes.recipeModels[position]
+        val recipe = recipes[position]
         holder.bind(recipe)
         holder.showPopupOptions(recipeToDish(recipe))
 
@@ -72,7 +72,7 @@ class RandomRecipesAdapter(
         }
     }
 
-    override fun getItemCount(): Int = recipes.recipeModels.size
+    override fun getItemCount(): Int = recipes.size
 
     inner class MyViewHolder(private val hBinding: ItemAdapterHomeFragmentGridBinding) :
         RecyclerView.ViewHolder(hBinding.root) {
@@ -145,9 +145,9 @@ class RandomRecipesAdapter(
 
     }
 
-    fun setData(recipesList: Recipes) {
-        recipes = Recipes(emptyList())
-        val listDiffUtils = ListDiffUtil(recipes.recipeModels, recipesList.recipeModels)
+    fun setData(recipesList: List<RecipeModel>) {
+        recipes = emptyList()
+        val listDiffUtils = ListDiffUtil(recipes, recipesList)
         val dispatchersResult = DiffUtil.calculateDiff(listDiffUtils)
         recipes = recipesList
         dispatchersResult.dispatchUpdatesTo(this)

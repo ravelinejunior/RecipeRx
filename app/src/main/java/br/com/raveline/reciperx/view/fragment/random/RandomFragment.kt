@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.databinding.RandomFragmentBinding
+import br.com.raveline.reciperx.utils.SystemFunctions.observeOnce
 import br.com.raveline.reciperx.view.adapter.RandomRecipesAdapter
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import br.com.raveline.reciperx.viewmodel.factories.RandomViewModelFactory
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class RandomFragment : Fragment() {
 
@@ -33,6 +36,8 @@ class RandomFragment : Fragment() {
         randomBinding = RandomFragmentBinding.inflate(inflater, container, false)
         randomAdapter = RandomRecipesAdapter(this, randomViewModel)
         setObservables()
+
+        getOfflineData()
         return randomBinding!!.root
     }
 
@@ -40,8 +45,6 @@ class RandomFragment : Fragment() {
         super.onResume()
 
         lifecycleScope.launchWhenResumed {
-
-            randomViewModel.getRandomRecipes()
 
             if (activity is MainActivity) {
                 (activity as MainActivity).showBottomNavigationView()
@@ -51,8 +54,14 @@ class RandomFragment : Fragment() {
         }
     }
 
+    private fun getOfflineData() {
+        randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) {
+            randomViewModel.getOfflineRecipes()
+        }
+    }
+
     private fun setObservables() {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch(Main) {
             randomViewModel.uiStateFlow.collect { uiState ->
                 when (uiState) {
 
@@ -68,23 +77,27 @@ class RandomFragment : Fragment() {
                     RandomViewModel.UiState.Success -> {
                         randomBinding?.run {
 
-                            randomViewModel.recipeRecipesLiveData.observe(viewLifecycleOwner) { recipes ->
-                                if (recipes.recipeModels.isNotEmpty()) {
+                            if (randomViewModel.allRecipes.value.isNullOrEmpty()) {
+                                randomViewModel.recipeRecipesLiveData.observeOnce(viewLifecycleOwner) { recipes ->
+                                    if (recipes.recipeModels.isNotEmpty()) {
+                                        randomAdapter.setData(recipes.recipeModels)
+                                        progressBarRandomFragment.visibility = GONE
+                                        lottieViewRandomFragmentId.visibility = GONE
+                                        recyclerViewRandomFragmentId.adapter = randomAdapter
+                                        recyclerViewRandomFragmentId.visibility = VISIBLE
+                                    }
+                                }
+                            } else {
+                                randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) { recipes ->
                                     randomAdapter.setData(recipes)
                                     progressBarRandomFragment.visibility = GONE
                                     lottieViewRandomFragmentId.visibility = GONE
                                     recyclerViewRandomFragmentId.adapter = randomAdapter
                                     recyclerViewRandomFragmentId.visibility = VISIBLE
-                                } else {
-                                    randomBinding?.run {
-                                        progressBarRandomFragment.visibility = GONE
-                                        lottieViewRandomFragmentId.visibility = VISIBLE
-                                        recyclerViewRandomFragmentId.visibility = GONE
-                                    }
                                 }
-
                             }
                         }
+
                     }
 
                     RandomViewModel.UiState.Error -> {
@@ -96,6 +109,7 @@ class RandomFragment : Fragment() {
                     }
                 }
             }
+
         }
     }
 
