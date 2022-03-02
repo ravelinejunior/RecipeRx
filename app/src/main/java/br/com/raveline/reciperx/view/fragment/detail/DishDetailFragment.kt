@@ -1,11 +1,10 @@
 package br.com.raveline.reciperx.view.fragment.detail
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.DishDetailFragmentBinding
+import br.com.raveline.reciperx.utils.Constants
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
 import com.bumptech.glide.Glide
@@ -34,6 +34,11 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
     private lateinit var dBinding: DishDetailFragmentBinding
     private val args: DishDetailFragmentArgs by navArgs()
     private lateinit var dish: DishModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -158,6 +163,38 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
                 setFavoriteIconChange(false)
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menuShareItemId) {
+            val type = "text/plain"
+            val subject = "Check this recipe bro"
+            var extraText = ""
+            val shareWith = "Share with "
+
+            dish.let {
+                var image = ""
+                if (it.imageSource == Constants.DISH_IMAGE_SOURCE_REMOTE) {
+                    image = it.image
+                }
+                extraText =
+                    "$image\n\nTitle:${it.title}\n\nType: ${it.type}\n\nCategory: ${it.category}\n\n" +
+                            "Ingredients: ${it.ingredients}\n\nInstructions: ${it.directionsToCook}" +
+                            "\n\n Time required to cook this is approximating ${it.cookingTime} minutes."
+            }
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = type
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+            intent.putExtra(Intent.EXTRA_TEXT, extraText)
+            startActivity(Intent.createChooser(intent, shareWith))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_share, menu)
     }
 
 

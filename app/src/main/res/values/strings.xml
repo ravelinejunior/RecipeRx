@@ -42,4 +42,5 @@
     <string name="title_select_item_to_filter">SELECT AN ITEM TO FILTER</string>
     <string name="msg_insert_on_main">Insert on your dihes</string>
     <string name="msg_insert_this_on_your">Insert this dish on your database?</string>
+    <string name="share">Share</string>
 </resources>
