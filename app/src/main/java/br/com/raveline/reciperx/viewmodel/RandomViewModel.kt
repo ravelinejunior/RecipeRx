@@ -28,12 +28,16 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
 
     val allRecipes: LiveData<List<RecipeModel>> = repository.allRecipes.asLiveData()
 
-    fun getOfflineRecipes() {
+    fun getOfflineRecipes(isSwipe: Boolean) {
         _uiStateFlow.value = UiState.Loading
 
         try {
-            if (allRecipes.value.isNullOrEmpty()) {
-                getRandomRecipes()
+            if (allRecipes.value.isNullOrEmpty() || isSwipe) {
+                if (isSwipe) {
+                    viewModelScope.launch(Main) {
+                        getRandomRecipes()
+                    }
+                }
             }
             _uiStateFlow.value = UiState.Success
 
@@ -57,10 +61,10 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
                     override fun onSuccess(t: Recipes) {
 
                         viewModelScope.launch(Main) {
-                            _uiStateFlow.value = UiState.Success
-                            mutableRecipeResponse.postValue(t)
                             repository.deleteAllRecipes()
                             repository.insertRecipes(t.recipeModels)
+                            _uiStateFlow.value = UiState.Success
+                            mutableRecipeResponse.value = (t)
                         }
                     }
 

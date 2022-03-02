@@ -37,7 +37,13 @@ class RandomFragment : Fragment() {
         randomAdapter = RandomRecipesAdapter(this, randomViewModel)
         setObservables()
 
-        getOfflineData()
+        getOfflineData(false)
+
+        randomBinding!!.swipeRefreshLayoutRandomFragment.apply {
+            setOnRefreshListener {
+                getOfflineData(true)
+            }
+        }
         return randomBinding!!.root
     }
 
@@ -54,9 +60,9 @@ class RandomFragment : Fragment() {
         }
     }
 
-    private fun getOfflineData() {
+    private fun getOfflineData(swipe: Boolean) {
         randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) {
-            randomViewModel.getOfflineRecipes()
+            randomViewModel.getOfflineRecipes(swipe)
         }
     }
 
@@ -78,7 +84,7 @@ class RandomFragment : Fragment() {
                         randomBinding?.run {
 
                             if (randomViewModel.allRecipes.value.isNullOrEmpty()) {
-                                randomViewModel.recipeRecipesLiveData.observeOnce(viewLifecycleOwner) { recipes ->
+                                randomViewModel.recipeRecipesLiveData.observe(viewLifecycleOwner) { recipes ->
                                     if (recipes.recipeModels.isNotEmpty()) {
                                         randomAdapter.setData(recipes.recipeModels)
                                         progressBarRandomFragment.visibility = GONE
@@ -98,6 +104,8 @@ class RandomFragment : Fragment() {
                             }
                         }
 
+                        randomBinding?.swipeRefreshLayoutRandomFragment!!.isRefreshing = false
+
                     }
 
                     RandomViewModel.UiState.Error -> {
@@ -106,6 +114,8 @@ class RandomFragment : Fragment() {
                             lottieViewRandomFragmentId.visibility = VISIBLE
                             recyclerViewRandomFragmentId.visibility = GONE
                         }
+                        randomBinding?.swipeRefreshLayoutRandomFragment!!.isRefreshing = false
+
                     }
                 }
             }

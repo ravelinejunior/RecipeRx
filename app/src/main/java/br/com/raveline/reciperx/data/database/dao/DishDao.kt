@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 sealed interface DishDao {
 
-    @Query("SELECT * FROM DISH_TABLE WHERE isFromRandom = 0 ORDER BY ID")
+    @Query("SELECT * FROM DISH_TABLE WHERE isFromRandom = 0 ORDER BY ID DESC")
     fun selectAllDishes(): Flow<List<DishModel>>
 
-    @Query("SELECT * FROM DISH_TABLE WHERE type == :value ORDER BY ID")
+    @Query("SELECT * FROM DISH_TABLE WHERE type == :value ORDER BY ID DESC")
     fun selectDishByFilter(value: String): Flow<List<DishModel>>
 
     @Query("SELECT * FROM DISH_TABLE WHERE favoriteDish = 1 ORDER BY ID DESC")
