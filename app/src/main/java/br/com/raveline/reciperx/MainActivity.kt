@@ -11,9 +11,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import br.com.raveline.reciperx.databinding.ActivityMainBinding
+import br.com.raveline.reciperx.listeners.background_workers.NotificationWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
@@ -23,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(mainBinding.root)
-
+startNotificationWork()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerViewMain) as NavHostFragment
         navController = navHostFragment.navController
@@ -40,6 +43,26 @@ class MainActivity : AppCompatActivity() {
         mainBinding.bnvMainId.itemIconTintList = null
         setupActionBarWithNavController(navController, appBarConfig)
     }
+
+    private fun startNotificationWork() = WorkManager.getInstance(this)
+        .enqueueUniquePeriodicWork(
+            getString(R.string.periodic_notification_work_msg),
+            ExistingPeriodicWorkPolicy.KEEP,
+            createNotificationWorkRequest()
+        )
+
+    private fun createNotificationWorkRequest() =
+        PeriodicWorkRequestBuilder<NotificationWorker>(
+        15, TimeUnit.MINUTES
+    ).setBackoffCriteria(BackoffPolicy.LINEAR, 5, TimeUnit.MINUTES)
+        .setConstraints(createConstraints())
+        .build()
+
+    private fun createConstraints() = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(false)
+        .setRequiresCharging(false)
+        .build()
 
     fun hideBottomNavigationView() {
         mainBinding.apply {

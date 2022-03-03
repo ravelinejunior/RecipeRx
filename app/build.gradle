@@ -47,6 +47,12 @@ android {
 
 dependencies {
 
+    // WorkManager
+    def work_version = "2.7.1"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-rxjava2:$work_version"
+    implementation "androidx.work:work-gcm:$work_version"
+
     // Jsoup
     implementation 'org.jsoup:jsoup:1.14.1'
 
