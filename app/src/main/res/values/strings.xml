@@ -44,4 +44,7 @@
     <string name="msg_insert_this_on_your">Insert this dish on your database?</string>
     <string name="share">Share</string>
     <string name="periodic_notification_work_msg">Food for fool Notification</string>
+    <string name="notification_title">Check new foods</string>
+    <string name="notification_subtitle">Tap for more details</string>
+
 </resources>

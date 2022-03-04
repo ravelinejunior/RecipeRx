@@ -9,6 +9,7 @@ object Constants {
 
     // NOTIFICATIONS
     const val notificationIdKey = 58005
+    const val notificationIdTitle = "Notification"
     const val channelIdKey = "br.com.raveline.reciperx.channel.id"
 
     // CAMERA
