@@ -83,7 +83,7 @@
     <fragment
         android:id="@+id/dishDetailFragment"
         android:name="br.com.raveline.reciperx.view.fragment.detail.DishDetailFragment"
-        android:label="DishDetailFragment">
+        android:label="">
         <action
             android:id="@+id/action_dishDetailFragment_to_notificationFragment"
             app:destination="@id/randomFragment"

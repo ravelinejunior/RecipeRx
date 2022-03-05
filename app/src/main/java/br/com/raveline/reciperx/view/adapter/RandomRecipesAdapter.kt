@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
-import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.databinding.ItemAdapterHomeFragmentGridBinding
 import br.com.raveline.reciperx.utils.ListDiffUtil
 import br.com.raveline.reciperx.utils.SystemFunctions.loadImage
@@ -25,11 +24,8 @@ import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class RandomRecipesAdapter(
     private val fragment: Fragment,
@@ -61,6 +57,7 @@ class RandomRecipesAdapter(
                     val dish = recipeToDish(recipe)
                     dish.isFromRandom = true
                     CoroutineScope(IO).launch {
+                        dish.type = "Others"
                         randomViewModel.saveSelectedOnDatabase(dish)
                     }
                     val action =
@@ -127,16 +124,18 @@ class RandomRecipesAdapter(
             }
         }
 
-         fun showAddDialog(dish: DishModel) {
+        private fun showAddDialog(dish: DishModel) {
             AlertDialog.Builder(fragment.requireContext())
                 .setTitle(fragment.resources.getString(R.string.msg_insert_on_main))
                 .setMessage(fragment.resources.getString(R.string.msg_insert_this_on_your))
                 .setPositiveButton("Yes") { dialog, _ ->
                     CoroutineScope(IO).launch {
+                        dish.type = "Others"
                         randomViewModel.saveSelectedOnDatabase(dish)
                     }
                     dialog.dismiss()
-                    Toast.makeText(fragment.context, "Added to main dishes!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(fragment.context, "Added to main dishes!", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()

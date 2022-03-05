@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -102,6 +103,8 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun displayData(dish: DishModel) {
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = dish.title
+
         dBinding.apply {
             Glide.with(requireContext()).load(dish.image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

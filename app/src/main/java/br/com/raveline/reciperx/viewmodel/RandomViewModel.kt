@@ -33,10 +33,8 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
 
         try {
             if (allRecipes.value.isNullOrEmpty() || isSwipe) {
-                if (isSwipe) {
                     viewModelScope.launch(Main) {
                         getRandomRecipes()
-                    }
                 }
             }
             _uiStateFlow.value = UiState.Success

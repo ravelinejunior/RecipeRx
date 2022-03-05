@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun createNotificationWorkRequest() =
         PeriodicWorkRequestBuilder<NotificationWorker>(
-            15, TimeUnit.MINUTES
+            8, TimeUnit.HOURS
         ).setBackoffCriteria(BackoffPolicy.LINEAR, 5, TimeUnit.MINUTES)
             .setConstraints(createConstraints())
             .build()
