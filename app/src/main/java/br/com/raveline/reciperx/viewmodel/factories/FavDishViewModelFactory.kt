@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.raveline.reciperx.data.repository.DishRepository
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
+import javax.inject.Inject
 
-class FavDishViewModelFactory(
+class FavDishViewModelFactory @Inject constructor(
     private val repository: DishRepository
 ):ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

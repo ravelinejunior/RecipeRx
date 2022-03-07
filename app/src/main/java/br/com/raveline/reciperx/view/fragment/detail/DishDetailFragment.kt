@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
@@ -26,12 +25,19 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DishDetailFragment : Fragment(), View.OnClickListener {
 
-    private val favViewDishModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory(((requireActivity().application) as DishApplication).repository)
+    @Inject
+    lateinit var favDishViewModelFactory: FavDishViewModelFactory
+
+    private val favDishViewModel: FavDishViewModel by viewModels {
+        favDishViewModelFactory
     }
+
     private lateinit var dBinding: DishDetailFragmentBinding
     private val args: DishDetailFragmentArgs by navArgs()
     private lateinit var dish: DishModel
@@ -162,7 +168,7 @@ class DishDetailFragment : Fragment(), View.OnClickListener {
             R.id.linearLayoutDetailFragmentId,
             R.id.imageViewDetailFragmentFavoriteId -> {
                 dish.favoriteDish = !dish.favoriteDish
-                favViewDishModel.updateDish(dish)
+                favDishViewModel.updateDish(dish)
                 setFavoriteIconChange(false)
             }
         }

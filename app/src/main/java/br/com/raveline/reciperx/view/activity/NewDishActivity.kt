@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.navArgs
-import br.com.raveline.reciperx.DishApplication
 import br.com.raveline.reciperx.R
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.databinding.ActivityNewDishBinding
@@ -57,12 +56,15 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var customDialog: Dialog
     private lateinit var newDishBinding: ActivityNewDishBinding
@@ -70,8 +72,11 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private val args: NewDishActivityArgs? by navArgs()
 
+    @Inject
+    lateinit var favDishViewModelFactory: FavDishViewModelFactory
+
     private val favDishViewModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory((application as DishApplication).repository)
+        favDishViewModelFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -348,7 +353,7 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
         customDialog = Dialog(this)
         val dialogBinding: DialogCustomSpinnerDataBinding =
             DialogCustomSpinnerDataBinding.inflate(layoutInflater)
-        val customAdapter = CustomSpinnerAdapter(this, null,selected, items)
+        val customAdapter = CustomSpinnerAdapter(this, null, selected, items)
         customDialog.setContentView(dialogBinding.root)
 
         dialogBinding.apply {
@@ -368,19 +373,19 @@ class NewDishActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
 
-          try{
-              if(args != null){
-                  if (args?.dish != null) {
-                      supportActionBar?.let {
-                          it.title = args?.dish!!.title
-                      }
-                  }
-              }
-          }catch (e:Exception){
-              supportActionBar?.let {
-                  it.title = "New Dish"
-              }
-          }
+            try {
+                if (args != null) {
+                    if (args?.dish != null) {
+                        supportActionBar?.let {
+                            it.title = args?.dish!!.title
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                supportActionBar?.let {
+                    it.title = "New Dish"
+                }
+            }
         }
     }
 

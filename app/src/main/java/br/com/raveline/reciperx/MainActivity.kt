@@ -15,10 +15,12 @@ import androidx.work.*
 import br.com.raveline.reciperx.databinding.ActivityMainBinding
 import br.com.raveline.reciperx.listeners.background_workers.NotificationWorker
 import br.com.raveline.reciperx.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var navController: NavController

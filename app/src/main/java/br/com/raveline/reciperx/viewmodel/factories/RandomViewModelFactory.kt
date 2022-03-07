@@ -1,17 +1,20 @@
 package br.com.raveline.reciperx.viewmodel.factories
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.raveline.reciperx.data.repository.DishRepository
-import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class RandomViewModelFactory(
-    private val repository: DishRepository
+class RandomViewModelFactory @Inject constructor(
+    private val repository: DishRepository,
+   @ApplicationContext private val context: Context
 ):ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(RandomViewModel::class.java)){
-            return RandomViewModel(repository) as T
+            return RandomViewModel(repository, context) as T
         }
         throw IllegalArgumentException("Class doesn't match!")
     }

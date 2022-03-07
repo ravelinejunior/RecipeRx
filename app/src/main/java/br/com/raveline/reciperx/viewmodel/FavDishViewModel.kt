@@ -6,10 +6,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.repository.DishRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavDishViewModel(private val repository: DishRepository):ViewModel() {
+class FavDishViewModel @Inject constructor(private val repository: DishRepository) : ViewModel() {
 
     val allDish = repository.allDishes.asLiveData()
     val favoriteDishes = repository.favoriteDishes.asLiveData()
@@ -30,8 +30,8 @@ class FavDishViewModel(private val repository: DishRepository):ViewModel() {
         repository.deleteAllDishes()
     }
 
-    fun getDishesByFilter(value:String): LiveData<List<DishModel>> = repository.getDishesByFilter(value).asLiveData()
-
+    fun getDishesByFilter(value: String): LiveData<List<DishModel>> =
+        repository.getDishesByFilter(value).asLiveData()
 
 
 }

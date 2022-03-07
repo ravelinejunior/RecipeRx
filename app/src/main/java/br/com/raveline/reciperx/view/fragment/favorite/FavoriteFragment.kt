@@ -16,11 +16,17 @@ import br.com.raveline.reciperx.databinding.FavoriteFragmentBinding
 import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
+    @Inject
+    lateinit var favDishViewModelFactory: FavDishViewModelFactory
+
     private val favDishViewModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory(((requireActivity().application) as DishApplication).repository)
+        favDishViewModelFactory
     }
 
     private lateinit var favoriteBinding: FavoriteFragmentBinding

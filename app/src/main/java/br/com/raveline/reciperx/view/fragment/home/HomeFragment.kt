@@ -25,13 +25,19 @@ import br.com.raveline.reciperx.view.adapter.HomeDishAdapter
 import br.com.raveline.reciperx.viewmodel.FavDishViewModel
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import br.com.raveline.reciperx.viewmodel.factories.FavDishViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var homeFragmentBinding: HomeFragmentBinding
 
+    @Inject
+    lateinit var favDishViewModelFactory: FavDishViewModelFactory
+
     private val favDishViewModel: FavDishViewModel by viewModels {
-        FavDishViewModelFactory((requireActivity().application as DishApplication).repository)
+        favDishViewModelFactory
     }
 
     private lateinit var customListDialog: Dialog

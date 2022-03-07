@@ -1,11 +1,15 @@
 package br.com.raveline.reciperx.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
 import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.data.remote.RecipesApiService
 import br.com.raveline.reciperx.data.repository.DishRepository
+import br.com.raveline.reciperx.utils.SystemFunctions
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -14,11 +18,17 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RandomViewModel(private val repository: DishRepository) : ViewModel() {
+@HiltViewModel
+class RandomViewModel @Inject constructor(
+    private val repository: DishRepository,
+    @ApplicationContext val context: Context
+) : ViewModel() {
     private val randomRecipesApiServices = RecipesApiService()
 
     private val compositeDisposable = CompositeDisposable()
+
 
     private val mutableRecipeResponse = MutableLiveData<Recipes>()
     val recipeRecipesLiveData: LiveData<Recipes> get() = mutableRecipeResponse
@@ -28,13 +38,17 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
 
     val allRecipes: LiveData<List<RecipeModel>> = repository.allRecipes.asLiveData()
 
+    var isConnected = MutableLiveData(false)
+    var backOnline = MutableLiveData(false)
+
+
     fun getOfflineRecipes(isSwipe: Boolean) {
         _uiStateFlow.value = UiState.Loading
 
         try {
             if (allRecipes.value.isNullOrEmpty() || isSwipe) {
-                    viewModelScope.launch(Main) {
-                        getRandomRecipes()
+                viewModelScope.launch(Main) {
+                    getRandomRecipes()
                 }
             }
             _uiStateFlow.value = UiState.Success
@@ -51,27 +65,37 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
 
         _uiStateFlow.value = UiState.Loading
 
-        compositeDisposable.add(
-            randomRecipesApiServices.getRandomRecipes()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<Recipes>() {
-                    override fun onSuccess(t: Recipes) {
+        if (SystemFunctions.isNetworkAvailable(context)) {
 
-                        viewModelScope.launch(Main) {
-                            repository.deleteAllRecipes()
-                            repository.insertRecipes(t.recipeModels)
-                            _uiStateFlow.value = UiState.Success
-                            mutableRecipeResponse.value = (t)
+            isConnected.value = true
+            backOnline.value = true
+
+            compositeDisposable.add(
+                randomRecipesApiServices.getRandomRecipes()
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(object : DisposableSingleObserver<Recipes>() {
+                        override fun onSuccess(t: Recipes) {
+
+                            viewModelScope.launch(Main) {
+                                repository.deleteAllRecipes()
+                                repository.insertRecipes(t.recipeModels)
+                                _uiStateFlow.value = UiState.Success
+                                mutableRecipeResponse.value = (t)
+                            }
                         }
-                    }
 
-                    override fun onError(e: Throwable) {
-                        _uiStateFlow.value = UiState.Error
-                        e.printStackTrace()
-                    }
-                })
-        )
+                        override fun onError(e: Throwable) {
+                            _uiStateFlow.value = UiState.Error
+                            e.printStackTrace()
+                        }
+                    })
+            )
+        } else {
+            _uiStateFlow.value = UiState.NoConnection
+            isConnected.value = false
+            backOnline.value = false
+        }
 
     }
 
@@ -82,6 +106,7 @@ class RandomViewModel(private val repository: DishRepository) : ViewModel() {
     sealed class UiState {
         object Success : UiState()
         object Error : UiState()
+        object NoConnection : UiState()
         object Loading : UiState()
         object Initial : UiState()
     }

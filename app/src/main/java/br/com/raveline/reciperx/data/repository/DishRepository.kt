@@ -5,10 +5,13 @@ import br.com.raveline.reciperx.data.database.dao.DishDao
 import br.com.raveline.reciperx.data.database.dao.RecipeDao
 import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
-import br.com.raveline.reciperx.data.model.Recipes
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class DishRepository(private val dishDao: DishDao,private val recipeDao: RecipeDao) {
+class DishRepository @Inject constructor(
+    private val dishDao: DishDao,
+    private val recipeDao: RecipeDao
+) {
 
     val allDishes = dishDao.selectAllDishes()
 
@@ -17,36 +20,36 @@ class DishRepository(private val dishDao: DishDao,private val recipeDao: RecipeD
     val allRecipes = recipeDao.selectAllFromRecipes()
 
     @WorkerThread
-    suspend fun insertDish(dishModel: DishModel){
+    suspend fun insertDish(dishModel: DishModel) {
         dishDao.insertDish(dishModel)
     }
 
     @WorkerThread
-    suspend fun insertRecipes(recipes: List<RecipeModel>){
+    suspend fun insertRecipes(recipes: List<RecipeModel>) {
         recipeDao.insertRecipes(recipes)
     }
 
     @WorkerThread
-    suspend fun deleteAllRecipes(){
+    suspend fun deleteAllRecipes() {
         recipeDao.deleteAllRecipes()
     }
 
     @WorkerThread
-    suspend fun updateDish(dishModel: DishModel){
+    suspend fun updateDish(dishModel: DishModel) {
         dishDao.updateDish(dishModel)
     }
 
     @WorkerThread
-    suspend fun deleteDish(dishModel: DishModel){
+    suspend fun deleteDish(dishModel: DishModel) {
         dishDao.deleteFavoriteDish(dishModel)
     }
 
     @WorkerThread
-    suspend fun deleteAllDishes(){
+    suspend fun deleteAllDishes() {
         dishDao.deleteAllDishes()
     }
 
     @WorkerThread
-    fun getDishesByFilter(value:String) : Flow<List<DishModel>> = dishDao.selectDishByFilter(value)
+    fun getDishesByFilter(value: String): Flow<List<DishModel>> = dishDao.selectDishByFilter(value)
 
 }
