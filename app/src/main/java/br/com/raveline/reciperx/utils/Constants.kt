@@ -21,6 +21,8 @@ object Constants {
     const val DISH_TABLE_NAME = "DISH_TABLE"
     const val DISH_DATABASE_NAME = "DISH_DATABASE"
     const val RECIPES_TABLE_NAME = "RECIPES_TABLE"
+    const val CURRENT_DISH_KEY_NAME = "currentDish"
+    const val PREFS_KEY_NAME = "dish_pref"
 
     // REMOTE
     const val BASE_URL = "https://api.spoonacular.com/recipes/"
@@ -31,6 +33,7 @@ object Constants {
     const val DISH_TYPE = "DishType"
     const val DISH_CATEGORY = "DishCategory"
     const val DISH_COOKING_TYPE = "DishCookingType"
+    const val DISH_SEARCH_CATEGORY = "DishCategory"
     const val DISH_FILTER_SELECTION = "Filter_Source"
     const val DISH_IMAGE_SOURCE_LOCAL = "Local_Source"
     const val DISH_IMAGE_SOURCE_REMOTE = "Remote_Source"
@@ -91,5 +94,25 @@ object Constants {
         return list
     }
 
+    fun dishRecipeCategoryType(): ArrayList<String> {
+        val list = arrayListOf<String>()
+
+        list.add("main course")
+        list.add("side dish")
+        list.add("dessert")
+        list.add("appetizer")
+        list.add("salad")
+        list.add("bread")
+        list.add("breakfast")
+        list.add("soup")
+        list.add("beverage")
+        list.add("sauce")
+        list.add("marinade")
+        list.add("fingerfood")
+        list.add("snack")
+        list.add("drink")
+
+        return list
+    }
 
 }

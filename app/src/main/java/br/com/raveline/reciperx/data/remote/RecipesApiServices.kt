@@ -10,7 +10,7 @@ sealed interface RecipesApiServices{
     @GET("random")
      fun getRandomRecipes(
         @Query("apiKey") apiKey:String = API_KEY,
-        @Query("number") number:Int = 50,
-        @Query("tags") tags:String = "main course"
+        @Query("number") number:Int = 30,
+        @Query("tags") tags:String
     ):Single<Recipes>
 }

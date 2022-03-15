@@ -1,12 +1,11 @@
 package br.com.raveline.reciperx.view.fragment.random
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,14 +13,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raveline.reciperx.MainActivity
 import br.com.raveline.reciperx.R
+import br.com.raveline.reciperx.databinding.DialogCustomSpinnerDataBinding
 import br.com.raveline.reciperx.databinding.RandomFragmentBinding
 import br.com.raveline.reciperx.listeners.NetworkListeners
+import br.com.raveline.reciperx.utils.Constants
 import br.com.raveline.reciperx.utils.SystemFunctions.observeOnce
+import br.com.raveline.reciperx.view.adapter.CustomSpinnerAdapter
 import br.com.raveline.reciperx.view.adapter.RandomRecipesAdapter
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import br.com.raveline.reciperx.viewmodel.factories.RandomViewModelFactory
-import com.airbnb.lottie.LottieDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -41,8 +44,17 @@ class RandomFragment : Fragment() {
 
     private lateinit var randomAdapter: RandomRecipesAdapter
 
+    private lateinit var customListDialog: Dialog
+
+    private var mTag = "main course"
+
     @Inject
     lateinit var networkListeners: NetworkListeners
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -53,12 +65,16 @@ class RandomFragment : Fragment() {
         randomAdapter = RandomRecipesAdapter(this, randomViewModel)
         setObservables()
 
-        getOfflineData(false)
+       lifecycleScope.launch{
+           getData(false,mTag)
+       }
 
         randomBinding!!.swipeRefreshLayoutRandomFragment.apply {
             setOnRefreshListener {
-                getOfflineData(true)
-                isRefreshing = false
+                lifecycleScope.launch {
+                    getData(true,mTag)
+                    isRefreshing = false
+                }
             }
 
         }
@@ -78,9 +94,9 @@ class RandomFragment : Fragment() {
         }
     }
 
-    private fun getOfflineData(swipe: Boolean) {
-        randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) {
-            randomViewModel.getOfflineRecipes(swipe)
+    private suspend fun getData(swipe: Boolean, tag: String = "main course") {
+        lifecycleScope.launch(Dispatchers.IO){
+            randomViewModel.getRecipes(swipe, tag)
         }
     }
 
@@ -121,7 +137,7 @@ class RandomFragment : Fragment() {
                 if (!status) {
                     getNoConnectionDisplay()
                 } else {
-                    getOfflineData(true)
+                    getData(true,mTag)
                 }
             }
 
@@ -177,9 +193,62 @@ class RandomFragment : Fragment() {
         }
     }
 
+    private fun filterDishesDialog() {
+
+        customListDialog = Dialog(requireContext())
+        val dialogBinding = DialogCustomSpinnerDataBinding.inflate(layoutInflater)
+
+        customListDialog.setContentView(dialogBinding.root)
+        dialogBinding.textViewCustomSpinnerId.text =
+            resources.getString(R.string.title_select_item_to_filter)
+        val dishTypes = Constants.dishRecipeCategoryType()
+
+        dialogBinding.recyclerViewCustomSpinnerId.layoutManager =
+            LinearLayoutManager(requireContext())
+
+        val cAdapter = CustomSpinnerAdapter(
+            requireActivity(),
+            this,
+            Constants.DISH_FILTER_SELECTION,
+            dishTypes
+        )
+
+        dialogBinding.recyclerViewCustomSpinnerId.adapter = cAdapter
+
+        customListDialog.show()
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+
+            R.id.menuFilterRemoteDishId -> {
+                filterDishesDialog()
+                return true
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_random, menu)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         randomBinding = null
+    }
+
+    fun getRandomByCategory(item: String) {
+        lifecycleScope.launch {
+            getData(true, item)
+        }
+        mTag = item
+        customListDialog.dismiss()
     }
 
 }

@@ -6,6 +6,7 @@ import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
 import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.data.remote.RecipesApiService
+import br.com.raveline.reciperx.data.repository.DataStoreRepository
 import br.com.raveline.reciperx.data.repository.DishRepository
 import br.com.raveline.reciperx.utils.SystemFunctions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,12 +24,12 @@ import javax.inject.Inject
 @HiltViewModel
 class RandomViewModel @Inject constructor(
     private val repository: DishRepository,
-    @ApplicationContext val context: Context
+    @ApplicationContext val context: Context,
+    private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
     private val randomRecipesApiServices = RecipesApiService()
 
     private val compositeDisposable = CompositeDisposable()
-
 
     private val mutableRecipeResponse = MutableLiveData<Recipes>()
     val recipeRecipesLiveData: LiveData<Recipes> get() = mutableRecipeResponse
@@ -41,27 +42,28 @@ class RandomViewModel @Inject constructor(
     var isConnected = MutableLiveData(false)
     var backOnline = MutableLiveData(false)
 
+    val hasRecipeSaved = dataStoreRepository.hasRecipesSaved.asLiveData().value
 
-    fun getOfflineRecipes(isSwipe: Boolean) {
+    fun getRecipes(isSwipe: Boolean, tag: String = "main course") {
         _uiStateFlow.value = UiState.Loading
 
         try {
-            if (allRecipes.value.isNullOrEmpty() || isSwipe) {
-                viewModelScope.launch(Main) {
-                    getRandomRecipes()
+            viewModelScope.launch {
+                if (allRecipes.value.isNullOrEmpty() || isSwipe) {
+                    getRandomRecipes(tag)
                 }
+
+                _uiStateFlow.value = UiState.Success
             }
-            _uiStateFlow.value = UiState.Success
 
         } catch (e: Exception) {
             _uiStateFlow.value = UiState.Error
             e.printStackTrace()
-
         }
     }
 
 
-    private fun getRandomRecipes() {
+    private fun getRandomRecipes(tag: String) {
 
         _uiStateFlow.value = UiState.Loading
 
@@ -71,7 +73,7 @@ class RandomViewModel @Inject constructor(
             backOnline.value = true
 
             compositeDisposable.add(
-                randomRecipesApiServices.getRandomRecipes()
+                randomRecipesApiServices.getRandomRecipes(tag)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : DisposableSingleObserver<Recipes>() {
@@ -80,6 +82,7 @@ class RandomViewModel @Inject constructor(
                             viewModelScope.launch(Main) {
                                 repository.deleteAllRecipes()
                                 repository.insertRecipes(t.recipeModels)
+                                dataStoreRepository.saveRecipesInStore(true)
                                 _uiStateFlow.value = UiState.Success
                                 mutableRecipeResponse.value = (t)
                             }

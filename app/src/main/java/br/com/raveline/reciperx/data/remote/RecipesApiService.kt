@@ -1,6 +1,5 @@
 package br.com.raveline.reciperx.data.remote
 
-import android.util.Log
 import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.utils.Constants.BASE_URL
 import io.reactivex.rxjava3.core.Single
@@ -35,5 +34,5 @@ class RecipesApiService {
         .build()
         .create(RecipesApiServices::class.java)
 
-     fun getRandomRecipes(): Single<Recipes> =  retrofit.getRandomRecipes()
+    fun getRandomRecipes(tag: String): Single<Recipes> = retrofit.getRandomRecipes(tags = tag)
 }
