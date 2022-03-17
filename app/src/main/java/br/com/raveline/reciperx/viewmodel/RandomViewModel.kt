@@ -6,7 +6,6 @@ import br.com.raveline.reciperx.data.model.DishModel
 import br.com.raveline.reciperx.data.model.RecipeModel
 import br.com.raveline.reciperx.data.model.Recipes
 import br.com.raveline.reciperx.data.remote.RecipesApiService
-import br.com.raveline.reciperx.data.repository.DataStoreRepository
 import br.com.raveline.reciperx.data.repository.DishRepository
 import br.com.raveline.reciperx.utils.SystemFunctions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,7 +24,6 @@ import javax.inject.Inject
 class RandomViewModel @Inject constructor(
     private val repository: DishRepository,
     @ApplicationContext val context: Context,
-    private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
     private val randomRecipesApiServices = RecipesApiService()
 
@@ -39,17 +37,13 @@ class RandomViewModel @Inject constructor(
 
     val allRecipes: LiveData<List<RecipeModel>> = repository.allRecipes.asLiveData()
 
-    var isConnected = MutableLiveData(false)
-    var backOnline = MutableLiveData(false)
 
-    val hasRecipeSaved = dataStoreRepository.hasRecipesSaved.asLiveData().value
-
-    fun getRecipes(isSwipe: Boolean, tag: String = "main course") {
+    fun getRecipes(isSwipe: Boolean = false, tag: String = "main course") {
         _uiStateFlow.value = UiState.Loading
 
         try {
             viewModelScope.launch {
-                if (allRecipes.value.isNullOrEmpty() || isSwipe) {
+                if (isSwipe) {
                     getRandomRecipes(tag)
                 }
 
@@ -64,42 +58,40 @@ class RandomViewModel @Inject constructor(
 
 
     private fun getRandomRecipes(tag: String) {
+        viewModelScope.launch {
+            delay(500L)
+            _uiStateFlow.value = UiState.Loading
 
-        _uiStateFlow.value = UiState.Loading
+            if (SystemFunctions.isNetworkAvailable(context)) {
 
-        if (SystemFunctions.isNetworkAvailable(context)) {
 
-            isConnected.value = true
-            backOnline.value = true
+                compositeDisposable.add(
+                    randomRecipesApiServices.getRandomRecipes(tag)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(object : DisposableSingleObserver<Recipes>() {
+                            override fun onSuccess(t: Recipes) {
 
-            compositeDisposable.add(
-                randomRecipesApiServices.getRandomRecipes(tag)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : DisposableSingleObserver<Recipes>() {
-                        override fun onSuccess(t: Recipes) {
-
-                            viewModelScope.launch(Main) {
-                                repository.deleteAllRecipes()
-                                repository.insertRecipes(t.recipeModels)
-                                dataStoreRepository.saveRecipesInStore(true)
-                                _uiStateFlow.value = UiState.Success
-                                mutableRecipeResponse.value = (t)
+                                viewModelScope.launch {
+                                    repository.deleteAllRecipes()
+                                    repository.insertRecipes(t.recipeModels)
+                                    _uiStateFlow.value = UiState.Success
+                                    mutableRecipeResponse.value = (t)
+                                }
                             }
-                        }
 
-                        override fun onError(e: Throwable) {
-                            _uiStateFlow.value = UiState.Error
-                            e.printStackTrace()
-                        }
-                    })
-            )
-        } else {
-            _uiStateFlow.value = UiState.NoConnection
-            isConnected.value = false
-            backOnline.value = false
+                            override fun onError(e: Throwable) {
+                                _uiStateFlow.value = UiState.Error
+                                e.printStackTrace()
+                            }
+                        })
+                )
+
+
+            } else {
+                _uiStateFlow.value = UiState.NoConnection
+            }
         }
-
     }
 
     suspend fun saveSelectedOnDatabase(dish: DishModel) {

@@ -23,8 +23,6 @@ import br.com.raveline.reciperx.view.adapter.RandomRecipesAdapter
 import br.com.raveline.reciperx.viewmodel.RandomViewModel
 import br.com.raveline.reciperx.viewmodel.factories.RandomViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -65,14 +63,14 @@ class RandomFragment : Fragment() {
         randomAdapter = RandomRecipesAdapter(this, randomViewModel)
         setObservables()
 
-       lifecycleScope.launch{
-           getData(false,mTag)
-       }
+        lifecycleScope.launch {
+            getData(false, mTag)
+        }
 
         randomBinding!!.swipeRefreshLayoutRandomFragment.apply {
             setOnRefreshListener {
                 lifecycleScope.launch {
-                    getData(true,mTag)
+                    getData(true, mTag)
                     isRefreshing = false
                 }
             }
@@ -94,15 +92,58 @@ class RandomFragment : Fragment() {
         }
     }
 
-    private suspend fun getData(swipe: Boolean, tag: String = "main course") {
-        lifecycleScope.launch(Dispatchers.IO){
-            randomViewModel.getRecipes(swipe, tag)
+    private fun getData(swipe: Boolean, tag: String) {
+        lifecycleScope.launch {
+            randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) { recipes ->
+                if (recipes.isNotEmpty() && !swipe) {
+                    randomAdapter.setData(recipes)
+                    setSuccessfulDataDisplay(randomBinding!!)
+                } else {
+                    requestApiData(tag)
+                }
+            }
+        }
+    }
+
+    private fun requestApiData(tag: String) {
+        randomViewModel.getRecipes(true, tag)
+
+        lifecycleScope.launch {
+            randomViewModel.uiStateFlow.collect { uiState ->
+                when (uiState) {
+
+                    RandomViewModel.UiState.Initial,
+                    RandomViewModel.UiState.Loading -> {
+                        randomBinding?.run {
+                            progressBarRandomFragment.visibility = VISIBLE
+                            recyclerViewRandomFragmentId.visibility = GONE
+                            lottieViewRandomFragmentId.visibility = GONE
+                        }
+                    }
+
+                    RandomViewModel.UiState.Success -> {
+                        setupSuccessRecipe()
+                    }
+
+                    RandomViewModel.UiState.Error -> {
+                        randomBinding?.run {
+                            progressBarRandomFragment.visibility = GONE
+                            lottieViewRandomFragmentId.visibility = VISIBLE
+                            recyclerViewRandomFragmentId.visibility = GONE
+                        }
+
+                    }
+                    RandomViewModel.UiState.NoConnection -> {
+                        getNoConnectionDisplay()
+                    }
+                }
+            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun setObservables() {
-        lifecycleScope.launch(Main) {
+        lifecycleScope.launch {
             randomViewModel.uiStateFlow.collect { uiState ->
                 when (uiState) {
 
@@ -137,7 +178,7 @@ class RandomFragment : Fragment() {
                 if (!status) {
                     getNoConnectionDisplay()
                 } else {
-                    getData(true,mTag)
+                    getData(true, mTag)
                 }
             }
 
@@ -155,17 +196,9 @@ class RandomFragment : Fragment() {
 
     private fun setupSuccessRecipe() {
         randomBinding?.run {
-
-            if (randomViewModel.allRecipes.value.isNullOrEmpty()) {
-                randomViewModel.recipeRecipesLiveData.observe(viewLifecycleOwner) { recipes ->
-                    if (recipes.recipeModels.isNotEmpty()) {
-                        randomAdapter.setData(recipes.recipeModels)
-                        setSuccessfulDataDisplay(this)
-                    }
-                }
-            } else {
-                randomViewModel.allRecipes.observeOnce(viewLifecycleOwner) { recipes ->
-                    randomAdapter.setData(recipes)
+            randomViewModel.recipeRecipesLiveData.observe(viewLifecycleOwner) { recipes ->
+                if (recipes.recipeModels.isNotEmpty()) {
+                    randomAdapter.setData(recipes.recipeModels)
                     setSuccessfulDataDisplay(this)
                 }
             }
@@ -244,10 +277,11 @@ class RandomFragment : Fragment() {
     }
 
     fun getRandomByCategory(item: String) {
-        lifecycleScope.launch {
-            getData(true, item)
-        }
         mTag = item
+        lifecycleScope.launch {
+            getData(true, mTag)
+        }
+
         customListDialog.dismiss()
     }
 

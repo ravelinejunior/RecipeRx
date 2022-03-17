@@ -12,11 +12,10 @@ import javax.inject.Inject
 class RandomViewModelFactory @Inject constructor(
     private val repository: DishRepository,
    @ApplicationContext private val context: Context,
-    private val dataStoreRepository: DataStoreRepository
 ):ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(RandomViewModel::class.java)){
-            return RandomViewModel(repository, context,dataStoreRepository) as T
+            return RandomViewModel(repository, context) as T
         }
         throw IllegalArgumentException("Class doesn't match!")
     }
